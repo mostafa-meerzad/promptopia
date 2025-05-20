@@ -1,7 +1,12 @@
-import React from "react";
+import { Box, Text, VStack } from "@chakra-ui/react";
+import Header from "./components/Header";
 
 const HomePage = () => {
-  return <div>HomePage</div>;
+  return (
+    <Box>
+      <Header />
+    </Box>
+  );
 };
 
 export default HomePage;
