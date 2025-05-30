@@ -1,14 +1,12 @@
 import { Box, Text, VStack } from "@chakra-ui/react";
 import Header from "./Header";
-import PromptsList from "./components/PromptsList";
-import Search from "./components/Search";
+import PromptList from "./PromptList";
 
 const HomePage = () => {
   return (
-    <Box>
+    <Box my={10}>
       <Header />
-      {/* <Search/> */}
-      {/* <PromptsList/> */}
+      <PromptList />
     </Box>
   );
 };
