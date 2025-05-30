@@ -15,12 +15,12 @@ const Navbar = () => {
     <Box px={5} py={4}>
       <Flex align={"center"}>
         <Link as={NextLink} href="/">
-          <Image src={"./logo.svg"} width={8} height={8} />
+          <Image src={"/logo.svg"} width={8} height={8} />
           Promptopia
         </Link>
         <Spacer />
         <HStack>
-          <Link href="/" as={NextLink}>
+          <Link href="/prompts/create" as={NextLink}>
             <Button>Create</Button>
           </Link>
           <Link href="/" as={NextLink}>
