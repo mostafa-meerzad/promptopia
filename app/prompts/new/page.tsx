@@ -1,13 +1,14 @@
 "use client";
-import { Box, Button, Field, Flex } from "@chakra-ui/react";
+import { createPromptSchema } from "@/app/validationSchemas";
+import { Box, Button, Field, Flex, Spinner } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import type { Options } from "easymde";
 import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import SimpleMDE from "react-simplemde-editor";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createPromptSchema } from "@/app/validationSchemas";
 import { z } from "zod";
 
 type FormValues = z.infer<typeof createPromptSchema>;
@@ -18,10 +19,11 @@ const CreatePrompt = () => {
     control,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormValues>({ resolver: zodResolver(createPromptSchema) });
 
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const editorOptions: Options = {
     autofocus: true,
@@ -48,10 +50,12 @@ const CreatePrompt = () => {
 
   const onSubmit = async (data: FormValues) => {
     try {
+      setIsSubmitting(true);
       await axios.post("http://localhost:3000/api/prompts", data);
       reset();
       router.push("/");
     } catch (error) {
+      setIsSubmitting(false);
       console.log("something went wrong!, ", error);
     }
   };
@@ -80,8 +84,13 @@ const CreatePrompt = () => {
           />
         </Field.Root>
 
-        <Button type="submit" colorScheme="teal" width="full">
-          create prompt
+        <Button
+          type="submit"
+          colorScheme="teal"
+          width="full"
+          disabled={isSubmitting}
+        >
+          create prompt {isSubmitting && <Spinner />}
         </Button>
       </form>
     </Flex>
