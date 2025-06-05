@@ -1,65 +1,87 @@
 "use client";
-import { Box, Button, Input, Textarea } from "@chakra-ui/react";
-import React, { useCallback, useMemo, useState } from "react";
+import { Box, Button, Field, Flex } from "@chakra-ui/react";
 import axios from "axios";
-import SimpleMDE from "react-simplemde-editor";
+import type { Options } from "easymde";
 import "easymde/dist/easymde.min.css";
-import { Options } from "easymde";
+import { useRouter } from "next/navigation";
+import { Controller, useForm } from "react-hook-form";
+import SimpleMDE from "react-simplemde-editor";
+
+interface FormValues {
+  prompt: string;
+}
 
 const CreatePrompt = () => {
-  const [prompt, setPrompt] = useState("");
-  const autofocusNoSpellcheckerOptions = useMemo<Options>(() => {
-    return {
-      autofocus: true,
-      spellChecker: true,
-      toolbar: [
-        "bold",
-        "italic",
-        "heading",
-        "|",
-        "quote",
-        "unordered-list",
-        "ordered-list",
-        "|",
-        "link",
-        // 'image' removed
-        "|",
-        "preview",
-        "side-by-side",
-        "fullscreen",
-        "|",
-        "guide",
-      ],
-    };
-  }, []);
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>();
 
-  const onChange = useCallback((value: string) => {
-    setPrompt(value);
-  }, []);
+  const router = useRouter();
+
+  const editorOptions: Options = {
+    autofocus: true,
+    spellChecker: true,
+    toolbar: [
+      "bold",
+      "italic",
+      "heading",
+      "|",
+      "quote",
+      "unordered-list",
+      "ordered-list",
+      "|",
+      "link",
+      // 'image' removed
+      "|",
+      "preview",
+      "side-by-side",
+      "fullscreen",
+      "|",
+      "guide",
+    ],
+  };
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      await axios.post("http://localhost:3000/api/prompts", data);
+      reset();
+      router.push("/");
+    } catch (error) {
+      console.log("something went wrong!, ", error);
+    }
+  };
 
   return (
-    <Box maxW={"500px"}>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          try {
-            axios.post("http://localhost:3000/api/prompts", { prompt });
-            setPrompt("");
-          } catch (error) {
-            console.log("something went wrong!, ", error);
-          }
-        }}
-      >
-        <SimpleMDE
-          value={prompt}
-          onChange={onChange}
-          options={autofocusNoSpellcheckerOptions}
-        />
-        <Button width={"full"} type="submit">
-          submit
+    <Flex justifyContent={"center"}  >
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Field.Root invalid={!!errors}>
+          <Controller
+            name="prompt"
+            control={control}
+            defaultValue=""
+            rules={{ required: "prompt is required" }}
+            render={({ field }) => (
+              <Box width={{sm: "full", md: "500px", lg: "900px"}}>
+                <SimpleMDE
+                  placeholder="Write your prompt..."
+                  options={editorOptions}
+                  {...field}
+                />
+              </Box>
+            )}
+          />
+          <Field.ErrorText>{errors.prompt?.message}</Field.ErrorText>
+        </Field.Root>
+
+        <Button type="submit" colorScheme="teal" width="full">
+          create prompt
         </Button>
       </form>
-    </Box>
+    </Flex>
   );
 };
 
