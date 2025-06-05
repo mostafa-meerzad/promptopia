@@ -20,7 +20,7 @@ const Navbar = () => {
         </Link>
         <Spacer />
         <HStack>
-          <Link href="/prompts/create" as={NextLink}>
+          <Link href="/prompts/new" as={NextLink}>
             <Button>Create</Button>
           </Link>
           <Link href="/" as={NextLink}>
