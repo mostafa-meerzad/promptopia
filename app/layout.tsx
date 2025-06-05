@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import Provider from "./Provider";
 import Navbar from "./Navbar";
-import "./global.css";
+import { Box } from "@chakra-ui/react";
 
 const roboto = Roboto({
   subsets: ["latin", "greek"],
@@ -24,7 +24,9 @@ export default function RootLayout({
       <body className={`${roboto.className} antialiased`}>
         <Provider>
           <Navbar />
-          <main className="p-10">{children}</main>
+        <Box p={10}>
+            <main className="p-10">{children}</main>
+        </Box>
         </Provider>
       </body>
     </html>
