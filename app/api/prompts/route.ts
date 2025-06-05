@@ -1,10 +1,6 @@
+import { createPromptSchema } from "@/app/validationSchemas";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
-import z from "zod";
-
-const createPromptSchema = z.object({
-  prompt: z.string().min(5),
-});
 
 export async function GET() {
   const prompts = await prisma.prompt.findMany();

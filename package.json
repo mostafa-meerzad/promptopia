@@ -12,6 +12,7 @@
     "@chakra-ui/react": "^3.19.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@hookform/resolvers": "^5.0.1",
     "@prisma/client": "^6.8.2",
     "axios": "^1.9.0",
     "easymde": "^2.20.0",

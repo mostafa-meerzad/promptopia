@@ -6,10 +6,11 @@ import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import SimpleMDE from "react-simplemde-editor";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createPromptSchema } from "@/app/validationSchemas";
+import { z } from "zod";
 
-interface FormValues {
-  prompt: string;
-}
+type FormValues = z.infer<typeof createPromptSchema>;
 
 const CreatePrompt = () => {
   const {
@@ -18,7 +19,7 @@ const CreatePrompt = () => {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({ resolver: zodResolver(createPromptSchema) });
 
   const router = useRouter();
 
@@ -56,16 +57,19 @@ const CreatePrompt = () => {
   };
 
   return (
-    <Flex justifyContent={"center"}  >
+    <Flex justifyContent={"center"}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Field.Root invalid={!!errors}>
+          <Field.ErrorText>
+            {errors.prompt && errors.prompt.message}
+          </Field.ErrorText>
           <Controller
             name="prompt"
             control={control}
             defaultValue=""
             rules={{ required: "prompt is required" }}
             render={({ field }) => (
-              <Box width={{sm: "full", md: "500px", lg: "900px"}}>
+              <Box width={{ sm: "full", md: "500px", lg: "900px" }}>
                 <SimpleMDE
                   placeholder="Write your prompt..."
                   options={editorOptions}
@@ -74,7 +78,6 @@ const CreatePrompt = () => {
               </Box>
             )}
           />
-          <Field.ErrorText>{errors.prompt?.message}</Field.ErrorText>
         </Field.Root>
 
         <Button type="submit" colorScheme="teal" width="full">
