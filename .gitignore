@@ -42,3 +42,4 @@ next-env.d.ts
 appDesignStructure.txt
 ProjectPlan.md
 /lib/generated/prisma
+.vscode
