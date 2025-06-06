@@ -12,7 +12,7 @@ import NextLink from "next/link";
 
 const Navbar = () => {
   return (
-    <Box px={5} py={4}>
+    <Box px={{sm: 3, md:6, lg:10}} py={{sm: 3, md:5}}>
       <Flex align={"center"}>
         <Link as={NextLink} href="/">
           <Image src={"/logo.svg"} width={8} height={8} />
