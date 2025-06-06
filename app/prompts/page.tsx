@@ -16,7 +16,7 @@ const Prompts = async () => {
         p={0}
       >
         {prompts.map((p) => (
-          <PromptCard prompt={p} key={p.id} />
+          <PromptCard prompt={p.prompt} key={p.id} />
         ))}
       </SimpleGrid>
     </Box>
