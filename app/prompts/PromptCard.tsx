@@ -1,5 +1,6 @@
 import { Box, Button, Card } from "@chakra-ui/react";
 import MarkdownRenderer from "./MarkdownRenderer";
+import CopyButton from "./CopyButton";
 
 interface Props {
   prompt: string;
@@ -17,7 +18,7 @@ const PromptCard = async ({ prompt }: Props) => {
 
           <Card.Footer justifyContent={"flex-end"} gap={"5"} p={0}>
             <Button variant="outline">View</Button>
-            <Button>Copy</Button>
+            <CopyButton text={prompt}/>
           </Card.Footer>
         </Card.Body>
       </Card.Root>
