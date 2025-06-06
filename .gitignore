@@ -41,5 +41,5 @@ yarn-error.log*
 next-env.d.ts
 appDesignStructure.txt
 ProjectPlan.md
-/lib/generated/prisma
+/lib/generated
 .vscode
