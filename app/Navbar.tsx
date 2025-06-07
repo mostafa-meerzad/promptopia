@@ -1,3 +1,5 @@
+"use client";
+import { ColorModeButton } from "@/components/ui/color-mode";
 import {
   Box,
   Button,
@@ -7,25 +9,38 @@ import {
   Link,
   Spacer,
 } from "@chakra-ui/react";
-import React from "react";
 import NextLink from "next/link";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const router = useRouter();
   return (
-    <Box px={{sm: 3, md:6, lg:10}} py={{sm: 3, md:5}}>
+    <Box px={{ base: 3, md: 6, lg: 10 }} py={{ base: 5, md: 5 }}>
       <Flex align={"center"}>
         <Link as={NextLink} href="/">
           <Image src={"/logo.svg"} width={8} height={8} />
           Promptopia
         </Link>
         <Spacer />
-        <HStack>
-          <Link href="/prompts/new" as={NextLink}>
-            <Button>Create</Button>
-          </Link>
-          <Link href="/" as={NextLink}>
-            <Button>login</Button>
-          </Link>
+        <HStack gap={3}>
+          <Button
+            onClick={() => router.push("/prompts/new")}
+            borderRadius={"full"}
+            px={6}
+            fontSize={"md"}
+          >
+            Create
+          </Button>
+          <Button
+            onClick={() => router.push("/")}
+            borderRadius={"full"}
+            px={6}
+            fontSize={"md"}
+            variant={"outline"}
+          >
+            login
+          </Button>
+          <ColorModeButton />
         </HStack>
       </Flex>
     </Box>
