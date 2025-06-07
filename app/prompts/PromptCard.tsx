@@ -1,4 +1,4 @@
-import { Box, Card, HStack, Link } from "@chakra-ui/react";
+import { Card, HStack, Link } from "@chakra-ui/react";
 
 import CopyButton from "./CopyButton";
 import MarkdownRenderer from "./MarkdownRenderer";
@@ -9,8 +9,7 @@ interface Props {
 
 const PromptCard = async ({ prompt }: Props) => {
   return (
-    <Box>
-      <Card.Root as={"li"} w={"100%"}>
+      <Card.Root as={"li"} w={"100%"} bg={{base: "whiteAlpha.600", _dark: "blackAlpha.400"}}>
         <Card.Body gap={2}>
           <HStack justifyContent={"space-between"}>
             <Card.Title>Prompt</Card.Title>
@@ -29,7 +28,6 @@ const PromptCard = async ({ prompt }: Props) => {
           </Card.Footer>
         </Card.Body>
       </Card.Root>
-    </Box>
   );
 };
 
