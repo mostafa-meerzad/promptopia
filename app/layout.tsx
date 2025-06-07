@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import Provider from "./Provider";
 import Navbar from "./Navbar";
 import { Box } from "@chakra-ui/react";
+import "./global.css"
 
 const roboto = Roboto({
   subsets: ["latin", "greek"],
