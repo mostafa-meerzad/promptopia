@@ -1,26 +1,18 @@
-"use client";
-
-import { Box } from "@chakra-ui/react";
-import DOMPurify from "dompurify";
-import { marked } from "marked";
-import { useMemo } from "react";
+import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
+import remarkGfm from "remark-gfm";
 
 interface Props {
   markdown: string;
 }
-
 const MarkdownRenderer = ({ markdown }: Props) => {
-  const safeHtml = useMemo(() => {
-    const html = marked.parse(markdown);
-    return DOMPurify.sanitize(html as string);
-  }, [markdown]);
-
   return (
-    <Box
-      className="markdown-output"
-      mb={5}
-      dangerouslySetInnerHTML={{ __html: safeHtml }}
-    />
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      rehypePlugins={[rehypeHighlight]}
+    >
+      {markdown}
+    </ReactMarkdown>
   );
 };
 
