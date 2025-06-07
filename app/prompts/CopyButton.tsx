@@ -1,35 +1,16 @@
-"use client";
 
-import { Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { Clipboard, IconButton } from "@chakra-ui/react"
 
-const CopyButton = ({ text }: { text: string }) => {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      console.log("can't copy");
-      setCopied(false);
-    }
-  };
+const CopyButton = ({value}: {value: string}) => {
   return (
-    <Button
-      onClick={handleCopy}
-      backgroundColor={copied ? "green.400" : "black"}
-      variant={"solid"}
-    >
-      {copied ? "Copied" : "Copy"}{" "}
-    </Button>
-  );
-  //   return (
-  //     <Button onClick={handleCopy}>
-  //       copy
-  //     </Button>
-  //   );
-};
+    <Clipboard.Root value={value}>
+      <Clipboard.Trigger asChild>
+        <IconButton variant="surface" size="xs">
+          <Clipboard.Indicator />
+        </IconButton>
+      </Clipboard.Trigger>
+    </Clipboard.Root>
+  )
+}
 
-export default CopyButton;
+export default CopyButton
