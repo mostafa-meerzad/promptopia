@@ -1,9 +1,8 @@
-import { VStack, Text, Center, Stack, Heading } from "@chakra-ui/react";
-import React from "react";
+import { Heading, Stack, Text } from "@chakra-ui/react";
 
-const Header = () => {
+const Hero = () => {
   return (
-    <Stack px={{sm: 5, md: 10}} mt={20} alignItems={"center"}>
+    <Stack px={{sm: 5, md: 10}} mt={15} mb={10} alignItems={"center"}>
       <Heading
         as={"h1"}
         fontSize={"3.3rem"}
@@ -33,4 +32,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Hero;

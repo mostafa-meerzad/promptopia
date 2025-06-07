@@ -1,14 +1,14 @@
-import { Box, Link } from "@chakra-ui/react";
-import NextLink from "next/link";
-import Header from "./Header";
+import { Box } from "@chakra-ui/react";
+import Hero from "./Hero";
+import TopRatedPrompts from "./TopRatedPrompts";
+import ViewMore from "./ViewMore";
 
 const HomePage = () => {
   return (
     <Box my={10}>
-      <Header />
-      <Link as={NextLink} href="/prompts">
-        view all
-      </Link>
+      <Hero />
+      <TopRatedPrompts />
+      <ViewMore />
     </Box>
   );
 };
