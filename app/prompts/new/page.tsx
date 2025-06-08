@@ -1,17 +1,20 @@
 "use client";
 import { createPromptSchema } from "@/app/validationSchemas";
-import { Box, Button, Field, Flex, Spinner } from "@chakra-ui/react";
+import { Button, Field, Flex, Spinner } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import type { Options } from "easymde";
 import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import SimpleMDE from "react-simplemde-editor";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
+import dynamic from "next/dynamic";
 
-type FormValues = z.infer<typeof createPromptSchema>;
+const MarkdownEditor = dynamic(() => import("./MarkdownEditor"), {
+  ssr: false,
+});
+
+export type FormValues = z.infer<typeof createPromptSchema>;
 
 const CreatePrompt = () => {
   const {
@@ -25,33 +28,10 @@ const CreatePrompt = () => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const editorOptions: Options = {
-    autofocus: true,
-    spellChecker: true,
-    toolbar: [
-      "bold",
-      "italic",
-      "heading",
-      "|",
-      "quote",
-      "unordered-list",
-      "ordered-list",
-      "|",
-      "link",
-      // 'image' removed
-      "|",
-      "preview",
-      "side-by-side",
-      "fullscreen",
-      "|",
-      "guide",
-    ],
-  };
-
   const onSubmit = async (data: FormValues) => {
     try {
       setIsSubmitting(true);
-      await axios.post("http://localhost:3000/api/prompts", data);
+      await axios.post("/prompts", data);
       reset();
       router.push("/");
     } catch (error) {
@@ -61,29 +41,14 @@ const CreatePrompt = () => {
   };
 
   return (
-    <Flex justifyContent={"center"}>
+    <Flex justifyContent={"center"} py={10}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Field.Root invalid={!!errors}>
+        <Field.Root invalid={!!errors} w={{base: "100%", md: "500px", lg: "800px"}} >
           <Field.ErrorText>
             {errors.prompt && errors.prompt.message}
           </Field.ErrorText>
-          <Controller
-            name="prompt"
-            control={control}
-            defaultValue=""
-            rules={{ required: "prompt is required" }}
-            render={({ field }) => (
-              <Box width={{ sm: "full", md: "500px", lg: "900px" }}>
-                <SimpleMDE
-                  placeholder="Write your prompt..."
-                  options={editorOptions}
-                  {...field}
-                />
-              </Box>
-            )}
-          />
+          <MarkdownEditor control={control} />
         </Field.Root>
-
         <Button
           type="submit"
           colorScheme="teal"
