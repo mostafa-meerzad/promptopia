@@ -1,12 +1,12 @@
 import { Box, Heading, HStack, SimpleGrid } from "@chakra-ui/react";
-import React from "react";
 
-import { prisma } from "@/lib/prisma";
+import { prismaClient } from "@/prisma/lib/prisma";
 import PromptCard from "./prompts/PromptCard";
 
 const TopRatedPrompts = async () => {
-  const prompts = await prisma.prompt.findMany({
-    where: { id: { gt: 4, lt: 10 } },
+  const topPrompts = await prismaClient.prompt.findMany({
+    where: { rating: { gt: 3.5, lte: 5 } },
+    take: 6,
   });
 
   return (
@@ -19,12 +19,18 @@ const TopRatedPrompts = async () => {
       <SimpleGrid
         as={"ul"}
         columns={{ base: 1, md: 2, lg: 3 }}
-        gap={6}
+        gap={4}
         listStyleType={"none"}
         p={0}
       >
-        {prompts.map((p) => (
-          <PromptCard prompt={p.prompt} key={p.id} />
+        {topPrompts.map(({ id, title, content, tags }) => (
+          <PromptCard
+            key={id}
+            id={id}
+            title={title}
+            content={content}
+            tags={tags}
+          />
         ))}
       </SimpleGrid>
     </Box>

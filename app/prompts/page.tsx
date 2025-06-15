@@ -1,10 +1,10 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
 import PromptCard from "./PromptCard";
-import { prisma } from "@/lib/prisma";
+import { prismaClient } from "@/prisma/lib/prisma";
 
 const Prompts = async () => {
-  const prompts = await prisma.prompt.findMany();
+  const prompts = await prismaClient.prompt.findMany();
 
   return (
     <Box as={"section"} my={10}>
@@ -15,8 +15,14 @@ const Prompts = async () => {
         listStyleType={"none"}
         p={0}
       >
-        {prompts.map((p) => (
-          <PromptCard prompt={p.prompt} key={p.id} />
+        {prompts.map(({ id, title, content, tags }) => (
+          <PromptCard
+            key={id}
+            id={id}
+            title={title}
+            content={content}
+            tags={tags}
+          />
         ))}
       </SimpleGrid>
     </Box>
