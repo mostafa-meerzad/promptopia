@@ -1,9 +1,9 @@
 import { createPromptSchema } from "@/app/validationSchemas";
-import { prisma } from "@/lib/prisma";
+import { prismaClient } from "@/prisma/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
-  const prompts = await prisma.prompt.findMany();
+  const prompts = await prismaClient.prompt.findMany();
   return NextResponse.json({ prompts });
 }
 
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(validation.error.errors[0], { status: 400 });
   }
 
-  const newPrompt = await prisma.prompt.create({
+  const newPrompt = await prismaClient.prompt.create({
     data: { prompt: body.prompt },
   });
 

@@ -2,11 +2,15 @@
   "name": "promptopia",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.19.1",
@@ -14,6 +18,7 @@
     "@emotion/styled": "^11.14.0",
     "@hookform/resolvers": "^5.0.1",
     "@prisma/client": "^6.8.2",
+    "@types/node": "^24.0.1",
     "axios": "^1.9.0",
     "dompurify": "^3.2.6",
     "easymde": "^2.20.0",
@@ -33,11 +38,11 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "prisma": "^6.8.2",
     "tailwindcss": "^4",
+    "tsx": "^4.20.3",
     "typescript": "^5"
   }
 }
