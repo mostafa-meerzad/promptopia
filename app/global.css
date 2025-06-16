@@ -1,9 +1,4 @@
-body {
-  max-width: 1440px;
-  margin-inline: auto;
-}
-
-main::after {
+body::after {
   z-index: -1;
   max-width: 640px;
   background-image: radial-gradient(at 27% 37%, #3a8bfd 0, transparent 0),

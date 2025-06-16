@@ -24,8 +24,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${urbanist.className} antialiased`}>
         <Provider>
-          <Navbar />
-          <Box p={{ sm: 3, md: 6, lg: 10 }}>
+          <Box px={{ base: 5, md: 8, lg: 10 }} pb={10} maxW="1440px" mx="auto">
+            <Navbar />
             <main className="p-10">{children}</main>
           </Box>
         </Provider>

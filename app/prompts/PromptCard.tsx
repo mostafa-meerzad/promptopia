@@ -16,6 +16,7 @@ const PromptCard = async ({ id, title, content, tags }: Props) => {
       as={"li"}
       w={"100%"}
       bg={{ base: "whiteAlpha.600", _dark: "blackAlpha.400" }}
+      overflow={"hidden"}
     >
       <Card.Body gap={2}>
         <HStack justifyContent={"space-between"}>

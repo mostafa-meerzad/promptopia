@@ -2,13 +2,12 @@ import { Heading, Stack, Text } from "@chakra-ui/react";
 
 const Hero = () => {
   return (
-    <Stack px={{sm: 5, md: 10}} mt={"0"} mb={10} gap={8} alignItems={"center"}>
+    <Stack mb={10} gap={{base: 4, sm: 8}} alignItems={"center"}>
       <Heading
         as={"h1"}
-        fontSize={"7xl"}
+        fontSize={{base:"6xl" ,sm: "7xl", }}
         fontWeight={"900"}
-        // fontWeight={"bolder"}
-        lineHeight={"4.4rem"}
+        lineHeight={{base: "4rem", sm:"4.4rem"}}
         textAlign={"center"}
         textTransform={"capitalize"}
       >

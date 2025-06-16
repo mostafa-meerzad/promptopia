@@ -8,6 +8,7 @@ import {
   Image,
   Link,
   Spacer,
+  Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,11 +16,11 @@ import { useRouter } from "next/navigation";
 const Navbar = () => {
   const router = useRouter();
   return (
-    <Box px={{ base: 3, md: 6, lg: 10 }} py={{ base: 5, md: 5 }}>
+    <Box as={"nav"} py={5}>
       <Flex align={"center"}>
         <Link as={NextLink} href="/">
           <Image src={"/logo.svg"} width={8} height={8} />
-          Promptopia
+          <Text display={{base: "none", sm: "inline-block"}} >Promptopia</Text>
         </Link>
         <Spacer />
         <HStack gap={3}>
