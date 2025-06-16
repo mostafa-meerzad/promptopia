@@ -38,13 +38,13 @@ export default function MarkdownEditor({ control }: Props) {
 
   return (
     <Controller
-      name="prompt"
+      name="content"
       control={control}
       defaultValue=""
       render={({ field }) => (
         <Box w={"100%"} boxShadow={"xl"}>
           <SimpleMDE
-            placeholder="Write your prompt..."
+            placeholder="Start typing your imagination..."
             options={editorOptions}
             {...field}
           />

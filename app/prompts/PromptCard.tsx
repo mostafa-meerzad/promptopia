@@ -7,11 +7,10 @@ interface Props {
   id: number;
   title: string;
   content: string;
-  rating?: number;
   tags: string[];
 }
 
-const PromptCard = async ({ id, title, content, rating, tags }: Props) => {
+const PromptCard = async ({ id, title, content, tags }: Props) => {
   return (
     <Card.Root
       as={"li"}
@@ -34,7 +33,9 @@ const PromptCard = async ({ id, title, content, rating, tags }: Props) => {
         >
           <HStack as={"ul"}>
             {tags.map((tag, i) => (
-              <Text as={"li"} key={i}>#{tag}</Text>
+              <Text as={"li"} key={i}>
+                #{tag}
+              </Text>
             ))}
           </HStack>
         </Card.Footer>

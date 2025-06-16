@@ -1,6 +1,14 @@
 "use client";
 import { createPromptSchema } from "@/app/validationSchemas";
-import { Button, Field, Flex, Spinner } from "@chakra-ui/react";
+import {
+  Button,
+  Checkbox,
+  Field,
+  Input,
+  Spinner,
+  Textarea,
+  VStack,
+} from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
@@ -8,18 +16,12 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import dynamic from "next/dynamic";
-
-const MarkdownEditor = dynamic(() => import("./MarkdownEditor"), {
-  ssr: false,
-});
 
 export type FormValues = z.infer<typeof createPromptSchema>;
 
 const CreatePrompt = () => {
   const {
     register,
-    control,
     handleSubmit,
     reset,
     formState: { errors },
@@ -31,9 +33,10 @@ const CreatePrompt = () => {
   const onSubmit = async (data: FormValues) => {
     try {
       setIsSubmitting(true);
-      await axios.post("/prompts", data);
+      await axios.post("/api/prompts", data);
       reset();
-      router.push("/");
+      setIsSubmitting(false);
+      router.push("/prompts");
     } catch (error) {
       setIsSubmitting(false);
       console.log("something went wrong!, ", error);
@@ -41,24 +44,84 @@ const CreatePrompt = () => {
   };
 
   return (
-    <Flex justifyContent={"center"} py={10}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Field.Root invalid={!!errors} w={{base: "100%", md: "500px", lg: "800px"}} >
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <VStack
+        px={4}
+        py={10}
+        maxW={{ base: "lg", md: "2xl" }}
+        gap={3}
+        mx="auto"
+        align="stretch"
+      >
+        <Field.Root invalid={!!errors.title}>
+          <Field.Label>Title</Field.Label>
+          <Input
+            boxShadow="md"
+            borderRadius="lg"
+            {...register("title")}
+            placeholder="e.g. Time travel"
+            _light={{ borderColor: "gray.500" }}
+            _dark={{ borderColor: "gray.600" }}
+          />
           <Field.ErrorText>
-            {errors.prompt && errors.prompt.message}
+            {errors.title && errors.title.message}
           </Field.ErrorText>
-          <MarkdownEditor control={control} />
         </Field.Root>
+
+        <Field.Root invalid={!!errors.content}>
+          <Field.Label>Prompt</Field.Label>
+          <Textarea
+            boxShadow="md"
+            borderRadius="lg"
+            minH={"40"}
+            resize={"vertical"}
+            autoresize
+            {...register("content")}
+            placeholder="e.g. Write a tweet about time travel"
+            _light={{ borderColor: "gray.500" }}
+            _dark={{ borderColor: "gray.600" }}
+          />
+          <Field.ErrorText>
+            {errors.content && errors.content.message}
+          </Field.ErrorText>
+        </Field.Root>
+        {/* todo: make tags field work  */}
+        {/* <Field.Root invalid={!!errors.tags}> */}
+        <Field.Root>
+          <Field.Label>Tags</Field.Label>
+          <Input
+            boxShadow="md"
+            borderRadius="lg"
+            // {...register("tags", { value: "" })}
+            placeholder="e.g. #time #travel"
+            _light={{ borderColor: "gray.500" }}
+            _dark={{ borderColor: "gray.600" }}
+          />
+          <Field.ErrorText>
+            {/* {errors.tags && errors.tags.message} */}
+          </Field.ErrorText>
+        </Field.Root>
+        {/* todo: make visibility field work  */}
+
+        <Checkbox.Root>
+          <Checkbox.HiddenInput />
+          <Checkbox.Label>Visibility (Private)</Checkbox.Label>
+          <Checkbox.Control
+            _light={{ borderColor: "gray.500" }}
+            _dark={{ borderColor: "gray.600" }}
+          />
+        </Checkbox.Root>
+
         <Button
           type="submit"
           colorScheme="teal"
           width="full"
           disabled={isSubmitting}
         >
-          create prompt {isSubmitting && <Spinner />}
+          Create Prompt {isSubmitting && <Spinner />}
         </Button>
-      </form>
-    </Flex>
+      </VStack>
+    </form>
   );
 };
 
