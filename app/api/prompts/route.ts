@@ -1,5 +1,5 @@
-import { FormValues } from "@/app/prompts/new/page";
-import { createPromptSchema } from "@/app/validationSchemas";
+import { promptSchema } from "@/app/validationSchemas";
+import { parseTags } from "@/utils/parseTags";
 import { prismaClient } from "@/prisma/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,20 +8,19 @@ export async function GET() {
   return NextResponse.json({ prompts });
 }
 
-export async function POST(request: NextRequest) {
-  const body: FormValues = await request.json();
-  const validation = createPromptSchema.safeParse(body);
-  if (!validation.success) {
-    return NextResponse.json(validation.error.errors[0], { status: 400 });
-  }
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const validation = promptSchema.safeParse(body);
 
-  // todo: need to refactor what should make it to the database
+  if (!validation.success)
+    return NextResponse.json(validation.error.errors[0], { status: 400 });
+
+  const { title, content, isPublic, tags } = validation.data;
+  const stringTags = parseTags(tags);
+
   const newPrompt = await prismaClient.prompt.create({
-    data: {
-      title: body.title ? body.title : "Prompt",
-      content: body.content,
-    },
+    data: { title, content, isPublic, tags: stringTags },
   });
 
-  return NextResponse.json({ newPrompt }, { status: 201 });
+  return NextResponse.json({ ok: true, prompt: newPrompt });
 }
