@@ -2,7 +2,7 @@ import { Heading, Stack, Text } from "@chakra-ui/react";
 
 const Hero = () => {
   return (
-    <Stack mb={10} gap={{base: 4, sm: 8}} alignItems={"center"}>
+    <Stack my={10} gap={{base: 4, sm: 8}} alignItems={"center"}>
       <Heading
         as={"h1"}
         fontSize={{base:"6xl" ,sm: "7xl", }}
