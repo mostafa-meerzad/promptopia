@@ -1,7 +1,12 @@
-import { Card, HStack, Link, Text } from "@chakra-ui/react";
-
+import {
+  Card,
+  HStack,
+  Tag,
+  Text,
+  VStack
+} from "@chakra-ui/react";
 import CopyButton from "./CopyButton";
-import MarkdownRenderer from "./MarkdownRenderer";
+import EditButton from "./EditButton";
 
 interface Props {
   id: number;
@@ -21,10 +26,13 @@ const PromptCard = async ({ id, title, content, tags }: Props) => {
       <Card.Body gap={2}>
         <HStack justifyContent={"space-between"}>
           <Card.Title>{title}</Card.Title>
-          <CopyButton value={content} />
+          <VStack>
+            <CopyButton value={content} />
+            <EditButton id={id} />
+          </VStack>
         </HStack>
-        <Card.Body px={0} py={2}>
-          <MarkdownRenderer markdown={content} />
+        <Card.Body px={0} pt={2} pb={5}>
+          <Text>{content}</Text>
         </Card.Body>
         <Card.Footer
           justifyContent={"flex-start"}
@@ -34,9 +42,9 @@ const PromptCard = async ({ id, title, content, tags }: Props) => {
         >
           <HStack as={"ul"}>
             {tags.map((tag, i) => (
-              <Text as={"li"} key={i}>
-                #{tag}
-              </Text>
+              <Tag.Root as={"li"} key={i}>
+                <Tag.Label>{tag}</Tag.Label>
+              </Tag.Root>
             ))}
           </HStack>
         </Card.Footer>

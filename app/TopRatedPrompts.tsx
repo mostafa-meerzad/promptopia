@@ -1,7 +1,7 @@
 import { Box, Heading, HStack, SimpleGrid } from "@chakra-ui/react";
 
 import { prismaClient } from "@/prisma/lib/prisma";
-import PromptCard from "./prompts/PromptCard";
+import PromptCard from "./prompts/components/PromptCard";
 
 const TopRatedPrompts = async () => {
   const topPrompts = await prismaClient.prompt.findMany({

@@ -1,6 +1,6 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
-import PromptCard from "./PromptCard";
+import PromptCard from "./components/PromptCard";
 import { prismaClient } from "@/prisma/lib/prisma";
 
 const Prompts = async () => {
