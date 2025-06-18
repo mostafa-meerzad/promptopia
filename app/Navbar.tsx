@@ -12,34 +12,50 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const router = useRouter();
+  const { status, data: session } = useSession();
   return (
     <Box as={"nav"} py={5}>
       <Flex align={"center"}>
         <Link as={NextLink} href="/">
           <Image src={"/logo.svg"} width={8} height={8} />
-          <Text display={{base: "none", sm: "inline-block"}} >Promptopia</Text>
+          <Text display={{ base: "none", sm: "inline-block" }}>Promptopia</Text>
         </Link>
         <Spacer />
         <HStack gap={3}>
-          <Button
-            onClick={() => router.push("/prompts/new")}
-            borderRadius={"full"}
-            px={6}
-            fontSize={"md"}
-          >
-            Create
+          <Button asChild borderRadius={"full"} px={6} fontSize={"md"}>
+            <NextLink href="/">Create</NextLink>
           </Button>
           <Button
-            onClick={() => router.push("/")}
             borderRadius={"full"}
             px={6}
             fontSize={"md"}
             variant={"outline"}
           >
-            login
+            {status === "authenticated" && (
+              <Link
+                as={NextLink}
+                w={"full"}
+                h={"full"}
+                href={"/api/auth/signout"}
+              >
+                Log out
+              </Link>
+            )}
+
+            {status === "unauthenticated" && (
+              <Link
+                as={NextLink}
+                w={"full"}
+                h={"full"}
+                href={"/api/auth/signin"}
+              >
+                Login
+              </Link>
+            )}
           </Button>
           <ColorModeButton />
         </HStack>

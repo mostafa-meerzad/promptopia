@@ -4,6 +4,7 @@ import Provider from "./Provider";
 import Navbar from "./Navbar";
 import { Box } from "@chakra-ui/react";
 import "./global.css";
+import AuthProvider from "./auth/Provider";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -23,12 +24,19 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${urbanist.className} antialiased`}>
-        <Provider>
-          <Box px={{ base: 5, md: 8, lg: 10 }} pb={10} maxW="1440px" mx="auto">
-            <Navbar />
-            <main className="p-10">{children}</main>
-          </Box>
-        </Provider>
+        <AuthProvider>
+          <Provider>
+            <Box
+              px={{ base: 5, md: 8, lg: 10 }}
+              pb={10}
+              maxW="1440px"
+              mx="auto"
+            >
+              <Navbar />
+              <main className="p-10">{children}</main>
+            </Box>
+          </Provider>
+        </AuthProvider>
       </body>
     </html>
   );
