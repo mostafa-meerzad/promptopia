@@ -7,6 +7,7 @@ import {
 } from "@chakra-ui/react";
 import CopyButton from "./CopyButton";
 import EditButton from "./EditButton";
+import DeleteButton from "./DeleteButton";
 
 interface Props {
   id: number;
@@ -29,6 +30,7 @@ const PromptCard = async ({ id, title, content, tags }: Props) => {
           <VStack>
             <CopyButton value={content} />
             <EditButton id={id} />
+            <DeleteButton id={id}/>
           </VStack>
         </HStack>
         <Card.Body px={0} pt={2} pb={5}>

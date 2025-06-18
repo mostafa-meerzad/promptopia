@@ -10,7 +10,7 @@ export async function PUT(
   const body = await req.json();
   const validation = promptSchema.safeParse(body);
   const { id } = await params;
-  
+
   if (!validation.success)
     return NextResponse.json(validation.error.errors[0], { status: 400 });
 
@@ -22,4 +22,22 @@ export async function PUT(
   });
 
   return NextResponse.json({ ok: true, prompt: newPrompt });
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const { id } = await params;
+
+  const prompt = await prismaClient.prompt.findUnique({
+    where: { id: parseInt(id) },
+  });
+
+  if (!prompt)
+    return NextResponse.json({ error: "invalid prompt" }, { status: 404 });
+
+  await prismaClient.prompt.delete({ where: { id: parseInt(id) } });
+
+  return NextResponse.json({});
 }
