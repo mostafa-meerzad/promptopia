@@ -16,12 +16,13 @@ import {
   MenuRoot,
   MenuTrigger,
   Portal,
+  Skeleton,
   Spacer,
-  Text,
+  Text
 } from "@chakra-ui/react";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import NextLink from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const Navbar = () => {
   return (
@@ -51,15 +52,21 @@ const Logo = () => {
 const CreateLink = () => {
   const pathName = usePathname();
   const { status } = useSession();
+  const router = useRouter();
+
   if (pathName === "/prompts/new") return null;
 
   return (
-    <Button asChild borderRadius={"full"} px={6} fontSize={"md"}>
-      <NextLink
-        href={status === "authenticated" ? "/prompts/new" : "/api/auth/signin"}
-      >
-        Create
-      </NextLink>
+    <Button
+      borderRadius={"full"}
+      px={6}
+      fontSize={"md"}
+      onClick={() => {
+        if (status !== "authenticated") signIn("", { callbackUrl: "/" });
+        router.push("/prompts/new");
+      }}
+    >
+      Create
     </Button>
   );
 };
@@ -67,15 +74,19 @@ const CreateLink = () => {
 const AuthStatus = () => {
   const { status, data: session } = useSession();
 
-  if (status === "loading") return null;
+  if (status === "loading") return <Skeleton />;
   if (status === "unauthenticated")
     return (
-      <Button borderRadius={"full"} px={6} fontSize={"md"} variant={"outline"}>
-        {status === "unauthenticated" && (
-          <Link as={NextLink} w={"full"} h={"full"} href={"/api/auth/signin"}>
-            Login
-          </Link>
-        )}
+      <Button
+        borderRadius={"full"}
+        px={6}
+        fontSize={"md"}
+        variant={"outline"}
+        onClick={() => {
+          signIn("", { callbackUrl: "/" });
+        }}
+      >
+        Login
       </Button>
     );
 
@@ -89,18 +100,30 @@ const AuthStatus = () => {
       </MenuTrigger>
       <Portal>
         <MenuPositioner ml={10} mt={3}>
-          <MenuContent>
-            <MenuItem value={session!.user?.email!}>
+          <MenuContent p={3}>
+            <MenuItem
+              _hover={{ background: "none" }}
+              _focus={{ background: "none" }}
+              _active={{ background: "none" }}
+              value={session!.user?.email!}
+            >
               {session!.user?.email!}
             </MenuItem>
-            <MenuItem value={"log out"}>
+            <MenuItem
+              _hover={{ background: "none" }}
+              _focus={{ background: "none" }}
+              _active={{ background: "none" }}
+              value={"log out"}
+            >
               <Button
                 borderRadius={"full"}
-                px={6}
+                fontSize={"sm"}
                 w={"full"}
-                variant={"surface"}
+                onClick={async () => {
+                  await signOut({ redirect: true, callbackUrl: "/" });
+                }}
               >
-                <NextLink href="/api/auth/signout">log out</NextLink>
+                log out
               </Button>
             </MenuItem>
           </MenuContent>
