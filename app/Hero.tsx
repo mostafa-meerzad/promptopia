@@ -1,14 +1,13 @@
 import { Heading, Stack, Text } from "@chakra-ui/react";
-import Menu from "./Menu";
 
 const Hero = () => {
   return (
-    <Stack my={10} gap={{base: 4, sm: 8}} alignItems={"center"}>
+    <Stack my={10} gap={{ base: 4, sm: 8 }} alignItems={"center"}>
       <Heading
         as={"h1"}
-        fontSize={{base:"6xl" ,sm: "7xl", }}
+        fontSize={{ base: "6xl", sm: "7xl" }}
         fontWeight={"900"}
-        lineHeight={{base: "4rem", sm:"4.4rem"}}
+        lineHeight={{ base: "4rem", sm: "4.4rem" }}
         textAlign={"center"}
         textTransform={"capitalize"}
       >
@@ -29,7 +28,6 @@ const Hero = () => {
         Promptopia is an open-source AI prompting tool for modern world to
         discover, create and share creative prompts
       </Text>
-      <Menu/>
     </Stack>
   );
 };
