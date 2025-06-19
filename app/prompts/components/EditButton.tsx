@@ -7,7 +7,7 @@ interface Props {
 }
 const EditButton = ({ id }: Props) => {
   return (
-    <Link href={`/prompts/${id}/edit`}>
+    <Link href={`/prompts/edit/${id}`}>
       <IconButton variant="surface" size="xs">
         <CiEdit />
       </IconButton>
