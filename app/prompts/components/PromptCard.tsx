@@ -1,13 +1,8 @@
-import {
-  Card,
-  HStack,
-  Tag,
-  Text,
-  VStack
-} from "@chakra-ui/react";
+import { Card, HStack, Tag, Text, VStack } from "@chakra-ui/react";
 import CopyButton from "./CopyButton";
 import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
+import { getServerSession } from "next-auth";
 
 interface Props {
   id: number;
@@ -17,6 +12,7 @@ interface Props {
 }
 
 const PromptCard = async ({ id, title, content, tags }: Props) => {
+  const session = await getServerSession();
   return (
     <Card.Root
       as={"li"}
@@ -29,8 +25,12 @@ const PromptCard = async ({ id, title, content, tags }: Props) => {
           <Card.Title>{title}</Card.Title>
           <VStack>
             <CopyButton value={content} />
-            <EditButton id={id} />
-            <DeleteButton id={id}/>
+            {session && (
+              <>
+                <EditButton id={id} />
+                <DeleteButton id={id} />
+              </>
+            )}
           </VStack>
         </HStack>
         <Card.Body px={0} pt={2} pb={5}>
