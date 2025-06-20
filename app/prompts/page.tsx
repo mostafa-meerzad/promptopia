@@ -2,9 +2,17 @@ import { Box, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
 import PromptCard from "./components/PromptCard";
 import { prismaClient } from "@/prisma/lib/prisma";
+import { getServerSession } from "next-auth";
+import authOptions from "../auth/authOptions";
 
 const Prompts = async () => {
-  const prompts = await prismaClient.prompt.findMany();
+  const session = await getServerSession(authOptions);
+  let prompts;
+  if (!session) {
+    prompts = await prismaClient.prompt.findMany({ where: { isPublic: true } });
+  } else {
+    prompts = await prismaClient.prompt.findMany();
+  }
 
   return (
     <Box as={"section"} my={10}>
