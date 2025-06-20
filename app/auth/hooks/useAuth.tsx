@@ -11,5 +11,6 @@ export const useAuth = () => {
     login: () => signIn("", { callbackUrl: "/" }),
     logout: () => signOut({ redirect: true, callbackUrl: "/" }),
     createNew: () => router.push("/prompts/new"),
+    onDashBoardNavigate :()=> router.push("/dashboard")
   };
 };

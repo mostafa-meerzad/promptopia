@@ -18,9 +18,10 @@ interface Props {
   user: User;
   onLogin: () => void;
   onLogout: () => void;
+  onDashboardNavigate: () => void;
 }
 
-const AuthMenu = ({ onLogin, onLogout, status, user }: Props) => {
+const AuthMenu = ({ onLogin, onLogout, onDashboardNavigate, status, user }: Props) => {
   if (status === "loading")
     return <Skeleton w={9} h={9} borderRadius={"full"} />;
 
@@ -54,6 +55,22 @@ const AuthMenu = ({ onLogin, onLogout, status, user }: Props) => {
               value={user?.email ?? "?"}
             >
               {user?.email ?? undefined}
+            </MenuItem>
+            <MenuItem
+              _hover={{ background: "none" }}
+              _focus={{ background: "none" }}
+              _active={{ background: "none" }}
+              value={"dashboard"}
+            >
+              <Button
+                borderRadius={"full"}
+                fontSize={"sm"}
+                w={"full"}
+                onClick={onDashboardNavigate}
+                variant={"outline"}
+              >
+                Dashboard
+              </Button>
             </MenuItem>
             <MenuItem
               _hover={{ background: "none" }}

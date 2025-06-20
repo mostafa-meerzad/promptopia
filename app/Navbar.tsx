@@ -8,7 +8,7 @@ import Logo from "./Logo";
 import { useAuth } from "./auth/hooks/useAuth";
 
 const Navbar = () => {
-  const { status, user, login, logout, createNew } = useAuth();
+  const { status, user, login, logout, createNew, onDashBoardNavigate } = useAuth();
 
   return (
     <Box as={"nav"} py={5}>
@@ -26,6 +26,7 @@ const Navbar = () => {
             user={user as User}
             onLogin={login}
             onLogout={logout}
+            onDashboardNavigate={onDashBoardNavigate}
           />
           <ColorModeButton />
         </HStack>
