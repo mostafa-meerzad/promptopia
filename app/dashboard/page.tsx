@@ -23,11 +23,22 @@ import authOptions from "../auth/authOptions";
 import PromptCard from "../prompts/components/PromptCard";
 import Drawer from "./Drawer";
 import SelectComponent from "./SelectComponent";
+import searchPrompts from "../_services/promptService";
+import SearchInput from "../_components/SearchInput";
 
-const DashBoard = async () => {
+const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
+  const { q } = await searchParams;
   const session = await getServerSession(authOptions);
-  const prompts = await prismaClient.prompt.findMany({
-    where: { author: { email: session?.user?.email! } },
+  let user = undefined;
+  if (session?.user?.email)
+    user = await prismaClient?.user.findUnique({
+      where: { email: session?.user?.email },
+    });
+
+  const prompts = await searchPrompts({
+    q,
+    authorId: user?.id,
+    scope: "MINE_ONLY",
   });
 
   return (
@@ -94,9 +105,7 @@ const DashBoard = async () => {
             <Drawer session={session} />
           </Box>
           <SelectComponent />
-          <InputGroup startElement={<CiSearch size={"20px"} />}>
-            <Input placeholder="Search a prompt..." borderRadius={"full"} />
-          </InputGroup>
+          <SearchInput />
         </Stack>
         <Box>
           <SimpleGrid
