@@ -1,18 +1,30 @@
-import { Card, HStack, Tag, Text, VStack } from "@chakra-ui/react";
+import {
+  Card,
+  GridItem,
+  HStack,
+  SimpleGrid,
+  Tag,
+  Text,
+} from "@chakra-ui/react";
 import CopyButton from "./CopyButton";
-import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
-import { getServerSession } from "next-auth";
+import EditButton from "./EditButton";
 
 interface Props {
   id: number;
   title: string;
   content: string;
   tags: string[];
+  readonly?: boolean;
 }
 
-const PromptCard = async ({ id, title, content, tags }: Props) => {
-  const session = await getServerSession();
+const PromptCard = async ({
+  id,
+  title,
+  content,
+  tags,
+  readonly = true,
+}: Props) => {
   return (
     <Card.Root
       as={"li"}
@@ -23,18 +35,30 @@ const PromptCard = async ({ id, title, content, tags }: Props) => {
       <Card.Body gap={2}>
         <HStack justifyContent={"space-between"}>
           <Card.Title>{title}</Card.Title>
-          <VStack>
-            <CopyButton value={content} />
-            {session && (
+          <SimpleGrid
+            columns={2}
+            gap={3}
+            position={"absolute"}
+            right={5}
+            top={5}
+          >
+            <GridItem colStart={2}>
+              <CopyButton value={content} />
+            </GridItem>
+            {readonly || (
               <>
-                <EditButton id={id} />
-                <DeleteButton id={id} />
+                <GridItem colStart={1} rowStart={1}>
+                  <EditButton id={id} />
+                </GridItem>
+                <GridItem colStart={2}>
+                  <DeleteButton id={id} />
+                </GridItem>
               </>
             )}
-          </VStack>
+          </SimpleGrid>
         </HStack>
         <Card.Body px={0} pt={2} pb={5}>
-          <Text>{content}</Text>
+          <Text maxW={"80%"}>{content}</Text>
         </Card.Body>
         <Card.Footer
           justifyContent={"flex-start"}

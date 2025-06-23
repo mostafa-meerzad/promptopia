@@ -122,6 +122,7 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
                 title={title}
                 content={content}
                 tags={tags}
+                readonly={false}
               />
             ))}
           </SimpleGrid>
