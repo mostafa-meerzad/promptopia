@@ -6,9 +6,11 @@ import AuthMenu from "./AuthMenu";
 import CreateLink from "./CreateLink";
 import Logo from "./Logo";
 import { useAuth } from "./auth/hooks/useAuth";
+import Drawer from "./dashboard/Drawer";
 
 const Navbar = () => {
-  const { status, user, login, logout, createNew, onDashBoardNavigate } = useAuth();
+  const { status, user, login, logout, createNew, onDashBoardNavigate } =
+    useAuth();
 
   return (
     <Box as={"nav"} py={5}>
@@ -29,6 +31,7 @@ const Navbar = () => {
             onDashboardNavigate={onDashBoardNavigate}
           />
           <ColorModeButton />
+          <Drawer />
         </HStack>
       </Flex>
     </Box>

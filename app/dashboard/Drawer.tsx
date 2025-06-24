@@ -1,9 +1,7 @@
-"use client";
 import {
   AvatarFallback,
   AvatarImage,
   AvatarRoot,
-  Box,
   Button,
   CloseButton,
   DrawerBackdrop,
@@ -20,25 +18,32 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { Session } from "next-auth";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { IoSettingsOutline } from "react-icons/io5";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { useAuth } from "../auth/hooks/useAuth";
+import { usePrompts } from "../prompts/hooks/usePrompts";
 
-const Drawer = ({ session }: { session: Session | null }) => {
+const Drawer =  () => {
   const [open, setOpen] = useState(false);
+  const { user } = useAuth();
+  const { privatePromptsCount, publicPromptsCount } = usePrompts();
+  const pathName = usePathname();
+  if (pathName !== "/dashboard") return null;
   return (
-    <HStack gap={2} w={"min"} ml={"auto"}>
-      <Text>Settings</Text>
-
+    <HStack
+      gap={2}
+      w={"min"}
+      ml={"auto"}
+      display={{ base: "block", md: "none" }}
+    >
       <DrawerRoot
         open={open}
         onOpenChange={(e) => setOpen(e.open)}
         placement={"start"}
       >
         <DrawerTrigger asChild>
-          <Button variant="outline" size="sm" w={"10"} ml={"auto"}>
-            <IoSettingsOutline />
-          </Button>
+          <RxHamburgerMenu cursor={"pointer"} size={"20px"} />
         </DrawerTrigger>
         <Portal>
           <DrawerBackdrop />
@@ -55,24 +60,24 @@ const Drawer = ({ session }: { session: Session | null }) => {
                     w={"36"}
                     h={"36"}
                   >
-                    <AvatarFallback name={session?.user?.name ?? "?"} />
-                    <AvatarImage src={session?.user?.image ?? undefined} />
+                    <AvatarFallback name={user?.name ?? "?"} />
+                    <AvatarImage src={user?.image ?? undefined} />
                   </AvatarRoot>
 
-                  <Text>{session?.user?.name}</Text>
-                  <Text>{session?.user?.email}</Text>
+                  <Text>{user?.name}</Text>
+                  <Text>{user?.email}</Text>
 
                   <VStack alignItems={"start"} w="full" my={5}>
                     <HStack>
                       <Text>Public Prompts</Text>
                       <TagRoot size={"xl"}>
-                        <TagLabel>{10}</TagLabel>
+                        <TagLabel>{publicPromptsCount}</TagLabel>
                       </TagRoot>
                     </HStack>
                     <HStack>
                       <Text>Private Prompts</Text>
                       <TagRoot size={"xl"}>
-                        <TagLabel>{10}</TagLabel>
+                        <TagLabel>{privatePromptsCount}</TagLabel>
                       </TagRoot>
                     </HStack>
                   </VStack>

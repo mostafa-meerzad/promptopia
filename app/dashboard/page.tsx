@@ -41,6 +41,17 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
     scope: "MINE_ONLY",
   });
 
+  const publicPromptsCount = await (
+    await prismaClient.prompt.findMany({
+      where: { AND: [{ authorId: user?.id }, { isPublic: true }] },
+    })
+  ).length;
+  const privatePromptsCount = await (
+    await prismaClient.prompt.findMany({
+      where: { AND: [{ authorId: user?.id }, { isPublic: false }] },
+    })
+  ).length;
+
   return (
     <Grid
       templateColumns={{ base: "1fr", md: "40% 60%", lg: "20% 80%" }}
@@ -76,13 +87,13 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
             <HStack>
               <Text>Public Prompts</Text>
               <TagRoot size={"xl"}>
-                <TagLabel>{10}</TagLabel>
+                <TagLabel>{publicPromptsCount}</TagLabel>
               </TagRoot>
             </HStack>
             <HStack>
               <Text>Private Prompts</Text>
               <TagRoot size={"xl"}>
-                <TagLabel>{10}</TagLabel>
+                <TagLabel>{privatePromptsCount}</TagLabel>
               </TagRoot>
             </HStack>
           </VStack>
@@ -101,9 +112,6 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
 
       <GridItem>
         <Stack direction={{ base: "column", md: "row" }} mb={5} gap={4}>
-          <Box display={{ base: "block", md: "none" }}>
-            <Drawer session={session} />
-          </Box>
           <SelectComponent />
           <SearchInput />
         </Stack>
