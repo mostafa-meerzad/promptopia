@@ -1,10 +1,10 @@
+import { Box } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import Provider from "./Provider";
-import Navbar from "./Navbar";
-import { Box } from "@chakra-ui/react";
-import "./global.css";
+import Navbar from "./_components/Navbar";
 import AuthProvider from "./auth/Provider";
+import "./global.css";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -33,7 +33,7 @@ export default function RootLayout({
               mx="auto"
             >
               <Navbar />
-              <main className="p-10">{children}</main>
+              <main>{children}</main>
             </Box>
           </Provider>
         </AuthProvider>

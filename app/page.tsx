@@ -1,6 +1,6 @@
 import Hero from "./Hero";
-import TopRatedPrompts from "./TopRatedPrompts";
-import ViewMore from "./ViewMore";
+import TopRatedPrompts from "./_components/TopRatedPrompts";
+import ViewMore from "./_components/ViewMore";
 
 const HomePage = () => {
   return (

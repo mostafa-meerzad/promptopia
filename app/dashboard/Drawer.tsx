@@ -20,11 +20,11 @@ import {
 } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { RxHamburgerMenu } from "react-icons/rx";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { useAuth } from "../auth/hooks/useAuth";
 import { usePrompts } from "../prompts/hooks/usePrompts";
 
-const Drawer =  () => {
+const Drawer = () => {
   const [open, setOpen] = useState(false);
   const { user } = useAuth();
   const { privatePromptsCount, publicPromptsCount } = usePrompts();
@@ -43,7 +43,7 @@ const Drawer =  () => {
         placement={"start"}
       >
         <DrawerTrigger asChild>
-          <RxHamburgerMenu cursor={"pointer"} size={"20px"} />
+          <BsThreeDotsVertical cursor={"pointer"} size={"20px"} />
         </DrawerTrigger>
         <Portal>
           <DrawerBackdrop />

@@ -7,7 +7,7 @@ interface Props {
   onAuthorized: () => void;
 }
 
-const CreateLink = ({ status, onUnAuthorized, onAuthorized }: Props) => {
+const CreatePrompt = ({ status, onUnAuthorized, onAuthorized }: Props) => {
   const pathName = usePathname();
 
   if (pathName === "/prompts/new") return null;
@@ -15,6 +15,7 @@ const CreateLink = ({ status, onUnAuthorized, onAuthorized }: Props) => {
   return (
     <Button
       borderRadius={"full"}
+     fontWeight={"semibold"}
       px={6}
       onClick={() => {
         if (status !== "authenticated") onUnAuthorized();
@@ -26,4 +27,4 @@ const CreateLink = ({ status, onUnAuthorized, onAuthorized }: Props) => {
   );
 };
 
-export default CreateLink;
+export default CreatePrompt;

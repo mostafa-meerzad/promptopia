@@ -1,5 +1,5 @@
 import authOptions from "@/app/auth/authOptions";
-import { promptSchema } from "@/app/validationSchemas";
+import { promptSchema } from "@/app/_services/validationSchemas";
 import { prismaClient } from "@/prisma/lib/prisma";
 import { parseTags } from "@/utils/parseTags";
 import { getServerSession } from "next-auth";

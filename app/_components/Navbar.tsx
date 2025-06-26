@@ -3,10 +3,10 @@ import { ColorModeButton } from "@/components/ui/color-mode";
 import { Box, Flex, HStack, Spacer } from "@chakra-ui/react";
 import { User } from "next-auth";
 import AuthMenu from "./AuthMenu";
-import CreateLink from "./CreateLink";
+import CreatePrompt from "./CreatePrompt";
 import Logo from "./Logo";
-import { useAuth } from "./auth/hooks/useAuth";
-import Drawer from "./dashboard/Drawer";
+import { useAuth } from "../auth/hooks/useAuth";
+import Drawer from "../dashboard/Drawer";
 
 const Navbar = () => {
   const { status, user, login, logout, createNew, onDashBoardNavigate } =
@@ -18,7 +18,7 @@ const Navbar = () => {
         <Logo />
         <Spacer />
         <HStack gap={3}>
-          <CreateLink
+          <CreatePrompt
             status={status}
             onUnAuthorized={login}
             onAuthorized={createNew}
