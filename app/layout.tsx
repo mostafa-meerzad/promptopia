@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import Provider from "./Provider";
-import Navbar from "./_components/Navbar";
+import Navbar from "./Navbar";
 import AuthProvider from "./auth/Provider";
 import "./global.css";
 

@@ -2,11 +2,11 @@
 import { ColorModeButton } from "@/components/ui/color-mode";
 import { Box, Flex, HStack, Spacer } from "@chakra-ui/react";
 import { User } from "next-auth";
-import AuthMenu from "./AuthMenu";
-import CreatePrompt from "./CreatePrompt";
-import Logo from "./Logo";
-import { useAuth } from "../auth/hooks/useAuth";
-import Drawer from "../dashboard/Drawer";
+import AuthMenu from "./_components/AuthMenu";
+import CreatePrompt from "./_components/CreatePrompt";
+import Logo from "./_components/Logo";
+import { useAuth } from "./auth/hooks/useAuth";
+import Drawer from "./dashboard/Drawer";
 
 const Navbar = () => {
   const { status, user, login, logout, createNew, onDashBoardNavigate } =

@@ -1,4 +1,4 @@
-import PromptForm from "../components/PromptForm";
+import PromptForm from "../PromptForm";
 import { Heading, VStack } from "@chakra-ui/react";
 
 const CreatePrompt = () => {

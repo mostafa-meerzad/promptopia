@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import SearchInput from "../_components/SearchInput";
 import searchPrompts from "../_services/promptService";
 import authOptions from "../auth/authOptions";
-import PromptCard from "./components/PromptCard";
+import PromptCard from "../PromptCard";
 import { prismaClient } from "@/prisma/lib/prisma";
 
 const Prompts = async ({ searchParams }: { searchParams: { q: string } }) => {

@@ -1,30 +1,10 @@
 import { prismaClient } from "@/prisma/lib/prisma";
-import {
-  AvatarFallback,
-  AvatarImage,
-  AvatarRoot,
-  Box,
-  Button,
-  Grid,
-  GridItem,
-  HStack,
-  Input,
-  InputGroup,
-  SimpleGrid,
-  Stack,
-  TagLabel,
-  TagRoot,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Grid, GridItem, SimpleGrid, Stack } from "@chakra-ui/react";
 import { getServerSession } from "next-auth";
-import { CiSearch } from "react-icons/ci";
-import authOptions from "../auth/authOptions";
-import PromptCard from "../prompts/components/PromptCard";
-import Drawer from "./Drawer";
-import SelectComponent from "./SelectComponent";
 import searchPrompts from "../_services/promptService";
-import SearchInput from "../_components/SearchInput";
+import authOptions from "../auth/authOptions";
+import PromptCard from "../PromptCard";
+import UserInfo from "./UserInfo";
 
 const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
   const { q } = await searchParams;
@@ -41,17 +21,6 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
     scope: "MINE_ONLY",
   });
 
-  const publicPromptsCount = await (
-    await prismaClient.prompt.findMany({
-      where: { AND: [{ authorId: user?.id }, { isPublic: true }] },
-    })
-  ).length;
-  const privatePromptsCount = await (
-    await prismaClient.prompt.findMany({
-      where: { AND: [{ authorId: user?.id }, { isPublic: false }] },
-    })
-  ).length;
-
   return (
     <Grid
       templateColumns={{ base: "1fr", md: "40% 60%", lg: "20% 80%" }}
@@ -64,56 +33,17 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
         borderWidth={"1px"}
         borderRadius={5}
         borderColor={{ _dark: "gray.800", _light: "gray.200" }}
-        px={4}
+        fontSize={"sm"}
+        px={"4"}
         py={"16"}
         h={{ base: "auto", md: "100svh" }}
       >
-        <VStack color={{ _dark: "whiteAlpha.700", _light: "blackAlpha.700" }}>
-          <AvatarRoot
-            variant={"outline"}
-            outline={"none"}
-            cursor={"pointer"}
-            w={"36"}
-            h={"36"}
-          >
-            <AvatarFallback name={session?.user?.name ?? "?"} />
-            <AvatarImage src={session?.user?.image ?? undefined} />
-          </AvatarRoot>
-
-          <Text>{session?.user?.name}</Text>
-          <Text>{session?.user?.email}</Text>
-
-          <VStack alignItems={"start"} w="full" my={5}>
-            <HStack>
-              <Text>Public Prompts</Text>
-              <TagRoot size={"xl"}>
-                <TagLabel>{publicPromptsCount}</TagLabel>
-              </TagRoot>
-            </HStack>
-            <HStack>
-              <Text>Private Prompts</Text>
-              <TagRoot size={"xl"}>
-                <TagLabel>{privatePromptsCount}</TagLabel>
-              </TagRoot>
-            </HStack>
-          </VStack>
-
-          <Button
-            mt={5}
-            w="full"
-            borderRadius={"full"}
-            fontSize={"lg"}
-            fontWeight={"semibold"}
-          >
-            Logout
-          </Button>
-        </VStack>
+        <UserInfo />
       </GridItem>
-
       <GridItem>
         <Stack direction={{ base: "column", md: "row" }} mb={5} gap={4}>
-          <SelectComponent />
-          <SearchInput />
+          {/* <SelectComponent /> */}
+          {/* <SearchInput /> */}
         </Stack>
         <Box>
           <SimpleGrid
