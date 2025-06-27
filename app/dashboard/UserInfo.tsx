@@ -1,16 +1,21 @@
+"use client";
 import {
-    AvatarFallback,
-    AvatarImage,
-    AvatarRoot,
-    Button,
-    HStack,
-    TagLabel,
-    TagRoot,
-    Text,
-    VStack
+  AvatarFallback,
+  AvatarImage,
+  AvatarRoot,
+  Button,
+  HStack,
+  TagLabel,
+  TagRoot,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
+import { signOut } from "next-auth/react";
+import useUserInfo from "./hooks/useUserInfo";
 
 const UserInfo = () => {
+  const { user } = useUserInfo();
+
   return (
     <VStack color={{ _dark: "whiteAlpha.700", _light: "blackAlpha.700" }}>
       <AvatarRoot
@@ -20,28 +25,24 @@ const UserInfo = () => {
         w={"36"}
         h={"36"}
       >
-        {/* <AvatarFallback name={session?.user?.name ?? "?"} /> */}
-        <AvatarFallback name={"?"} />
-        {/* <AvatarImage src={session?.user?.image ?? undefined} /> */}
-        <AvatarImage src={"test"} />
+        <AvatarFallback name={user?.name ?? "?"} />
+        <AvatarImage src={user?.image ?? undefined} />
       </AvatarRoot>
 
-      {/* <Text>{session?.user?.name}</Text> */}
-      <Text>Mostafa Meerzad</Text>
-      <Text>mostafa@test.com</Text>
-      {/* <Text>{session?.user?.email}</Text> */}
+      <Text>{user?.name}</Text>
+      <Text>{user?.email}</Text>
 
       <VStack alignItems={"start"} w="full" my={5}>
         <HStack>
           <Text>Public Prompts</Text>
           <TagRoot size={"lg"}>
-            <TagLabel>{1}</TagLabel>
+            <TagLabel>{user?.publicPrompts}</TagLabel>
           </TagRoot>
         </HStack>
         <HStack>
           <Text>Private Prompts</Text>
           <TagRoot size={"lg"}>
-            <TagLabel>{2}</TagLabel>
+            <TagLabel>{user?.privatePrompts}</TagLabel>
           </TagRoot>
         </HStack>
       </VStack>
@@ -52,6 +53,7 @@ const UserInfo = () => {
         borderRadius={"full"}
         fontSize={"md"}
         fontWeight={"semibold"}
+        onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
       >
         Logout
       </Button>

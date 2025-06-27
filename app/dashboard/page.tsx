@@ -23,7 +23,7 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
 
   return (
     <Grid
-      templateColumns={{ base: "1fr", md: "40% 60%", lg: "20% 80%" }}
+      templateColumns={{ base: "1fr", md: "40% 60%", lg: "25% 75%" }}
       gap={5}
       mt={5}
     >
@@ -41,7 +41,7 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
         <UserInfo />
       </GridItem>
       <GridItem>
-        <Stack direction={{ base: "column", md: "row" }} mb={5} gap={4}>
+        <Stack direction={{ base: "column", md: "row" }} gap={4}>
           {/* <SelectComponent /> */}
           {/* <SearchInput /> */}
         </Stack>
