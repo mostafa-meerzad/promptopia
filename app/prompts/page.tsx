@@ -1,8 +1,8 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import SearchInput from "../_components/SearchInput";
 import searchPrompts from "../_services/promptService";
-import PromptCard from "../PromptCard";
 import getUserInfo from "../_services/userService";
+import PromptCard from "../PromptCard";
 
 type Props = { searchParams: { q: string } };
 
@@ -26,13 +26,14 @@ const Prompts = async ({ searchParams }: Props) => {
         listStyleType={"none"}
         p={0}
       >
-        {prompts.map(({ id, title, content, tags }) => (
+        {prompts.map(({ id, title, content, tags, author }) => (
           <PromptCard
             key={id}
             id={id}
             title={title}
             content={content}
             tags={tags}
+            author={author}
           />
         ))}
       </SimpleGrid>

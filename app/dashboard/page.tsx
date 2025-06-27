@@ -1,13 +1,9 @@
-import { prismaClient } from "@/prisma/lib/prisma";
 import { Box, Grid, GridItem, SimpleGrid, Stack, Text } from "@chakra-ui/react";
-import { getServerSession } from "next-auth";
+import SearchInput from "../_components/SearchInput";
 import searchPrompts from "../_services/promptService";
-import authOptions from "../auth/authOptions";
+import getUserInfo from "../_services/userService";
 import PromptCard from "../PromptCard";
 import UserInfo from "./UserInfo";
-import SearchInput from "../_components/SearchInput";
-import useUserInfo from "./hooks/useUserInfo";
-import getUserInfo from "../_services/userService";
 
 const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
   const { q } = await searchParams;
@@ -50,16 +46,23 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
             listStyleType={"none"}
             p={0}
           >
-            {prompts.length === 0 ? (<Text textAlign={"center"} mt={32}>No prompts found.</Text>): (prompts.map(({ id, title, content, tags }) => (
-              <PromptCard
-                key={id}
-                id={id}
-                title={title}
-                content={content}
-                tags={tags}
-                readonly={false}
-              />
-            )))}
+            {prompts.length === 0 ? (
+              <Text textAlign={"center"} mt={32}>
+                No prompts found.
+              </Text>
+            ) : (
+              prompts.map(({ id, title, content, tags, author }) => (
+                <PromptCard
+                  key={id}
+                  id={id}
+                  title={title}
+                  content={content}
+                  tags={tags}
+                  readonly={false}
+                  author={author}
+                />
+              ))
+            )}
           </SimpleGrid>
         </Box>
       </GridItem>

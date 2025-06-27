@@ -4,9 +4,13 @@ import { Prompt } from "@prisma/client";
 import PromptCard from "./PromptCard";
 import SearchInput from "./_components/SearchInput";
 
+interface PromptWithAuthor extends Prompt {
+  author: { name: string | null; email: string; image: string | null };
+}
+
 interface Props {
   query: string;
-  prompts: Prompt[];
+  prompts: PromptWithAuthor[];
 }
 
 const TopRatedPrompts = ({ query, prompts }: Props) => {
@@ -37,15 +41,20 @@ const TopRatedPrompts = ({ query, prompts }: Props) => {
         listStyleType={"none"}
         p={0}
       >
-        {prompts.length === 0 ? <Text textAlign={"center"}>No prompts found ☹️.</Text>: prompts.map(({ id, title, content, tags }) => (
-          <PromptCard
-            key={id}
-            id={id}
-            title={title}
-            content={content}
-            tags={tags}
-          />
-        ))}
+        {prompts.length === 0 ? (
+          <Text textAlign={"center"}>No prompts found ☹️.</Text>
+        ) : (
+          prompts.map(({ id, title, content, tags, author }) => (
+            <PromptCard
+              key={id}
+              id={id}
+              title={title}
+              content={content}
+              tags={tags}
+              author={author}
+            />
+          ))
+        )}
       </SimpleGrid>
     </Box>
   );

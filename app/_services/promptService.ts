@@ -47,8 +47,16 @@ const searchPrompts = async (opts: {
     where: { AND: [textFilter, scopeFilter] },
     orderBy: { updatedAt: "desc" },
     take,
+    include: {
+      author: {
+        select: {
+          name: true,
+          email: true,
+          image: true,
+        },
+      },
+    },
   });
-}
+};
 
-
-export default searchPrompts
+export default searchPrompts;
