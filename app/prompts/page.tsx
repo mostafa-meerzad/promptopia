@@ -1,24 +1,18 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
-import { getServerSession } from "next-auth";
 import SearchInput from "../_components/SearchInput";
 import searchPrompts from "../_services/promptService";
-import authOptions from "../auth/authOptions";
 import PromptCard from "../PromptCard";
-import { prismaClient } from "@/prisma/lib/prisma";
+import getUserInfo from "../_services/userService";
 
-const Prompts = async ({ searchParams }: { searchParams: { q: string } }) => {
+type Props = { searchParams: { q: string } };
+
+const Prompts = async ({ searchParams }: Props) => {
   const { q } = await searchParams;
-  const session = await getServerSession(authOptions);
-  let user = undefined;
-  if (session?.user?.email)
-    user = await prismaClient?.user.findUnique({
-      where: { email: session?.user?.email },
-    });
-
+  const user = await getUserInfo();
   const prompts = await searchPrompts({
     q,
+    scope: user ? "PUBLIC_AND_MINE" : "PUBLIC_AND_MINE",
     authorId: user?.id,
-    scope: "PUBLIC_AND_MINE",
   });
 
   return (

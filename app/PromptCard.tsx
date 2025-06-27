@@ -6,9 +6,9 @@ import {
   Tag,
   Text,
 } from "@chakra-ui/react";
-import CopyButton from "./dashboard/_components/CopyButton";
-import DeleteButton from "./dashboard/_components/DeleteButton";
-import EditButton from "./dashboard/_components/EditButton";
+import CopyButton from "./prompts/_components/CopyButton";
+import DeleteButton from "./prompts/_components/DeleteButton";
+import EditButton from "./prompts/_components/EditButton";
 
 interface Props {
   id: number;
