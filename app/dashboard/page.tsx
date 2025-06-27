@@ -1,24 +1,22 @@
 import { prismaClient } from "@/prisma/lib/prisma";
-import { Box, Grid, GridItem, SimpleGrid, Stack } from "@chakra-ui/react";
+import { Box, Grid, GridItem, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import { getServerSession } from "next-auth";
 import searchPrompts from "../_services/promptService";
 import authOptions from "../auth/authOptions";
 import PromptCard from "../PromptCard";
 import UserInfo from "./UserInfo";
+import SearchInput from "../_components/SearchInput";
+import useUserInfo from "./hooks/useUserInfo";
+import getUserInfo from "../_services/userService";
 
 const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
   const { q } = await searchParams;
-  const session = await getServerSession(authOptions);
-  let user = undefined;
-  if (session?.user?.email)
-    user = await prismaClient?.user.findUnique({
-      where: { email: session?.user?.email },
-    });
 
+  const user = await getUserInfo();
   const prompts = await searchPrompts({
     q,
-    authorId: user?.id,
     scope: "MINE_ONLY",
+    authorId: user?.id,
   });
 
   return (
@@ -42,8 +40,7 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
       </GridItem>
       <GridItem>
         <Stack direction={{ base: "column", md: "row" }} gap={4}>
-          {/* <SelectComponent /> */}
-          {/* <SearchInput /> */}
+          <SearchInput />
         </Stack>
         <Box>
           <SimpleGrid
@@ -53,7 +50,7 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
             listStyleType={"none"}
             p={0}
           >
-            {prompts.map(({ id, title, content, tags }) => (
+            {prompts.length === 0 ? (<Text textAlign={"center"} mt={32}>No prompts found.</Text>): (prompts.map(({ id, title, content, tags }) => (
               <PromptCard
                 key={id}
                 id={id}
@@ -62,7 +59,7 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
                 tags={tags}
                 readonly={false}
               />
-            ))}
+            )))}
           </SimpleGrid>
         </Box>
       </GridItem>
