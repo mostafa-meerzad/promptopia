@@ -1,21 +1,35 @@
-import { Box, Heading, HStack, SimpleGrid } from "@chakra-ui/react";
+import { Box, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 
-import { prismaClient } from "@/prisma/lib/prisma";
+import { Prompt } from "@prisma/client";
 import PromptCard from "./PromptCard";
+import SearchInput from "./_components/SearchInput";
 
-const TopRatedPrompts = async () => {
-  const topPrompts = await prismaClient.prompt.findMany({
-    where: { rating: { gt: 3.5, lte: 5 } },
-    take: 6,
-  });
+interface Props {
+  query: string;
+  prompts: Prompt[];
+}
 
+const TopRatedPrompts = ({ query, prompts }: Props) => {
   return (
     <Box as={"section"} mb={10} mt={5}>
-      <HStack>
+      <Flex
+        flexDirection={{ base: "column-reverse" }}
+        position={"relative"}
+        my={3}
+      >
         <Heading as={"h2"} fontSize={"md"} fontWeight={"bold"} mb={5}>
-          Top Rated
+          {query ? "Search Results" : "Top Rated"}
         </Heading>
-      </HStack>
+        <Box
+          w={{ base: "full", md: "70%", lg: "50%" }}
+          position={{ base: "relative", md: "absolute" }}
+          mx={"auto"}
+          left={{ base: 0, md: "auto", lg: "0" }}
+          right={0}
+        >
+          <SearchInput />
+        </Box>
+      </Flex>
       <SimpleGrid
         as={"ul"}
         columns={{ base: 1, md: 2, lg: 3 }}
@@ -23,7 +37,7 @@ const TopRatedPrompts = async () => {
         listStyleType={"none"}
         p={0}
       >
-        {topPrompts.map(({ id, title, content, tags }) => (
+        {prompts.length === 0 ? <Text textAlign={"center"}>No prompts found ☹️.</Text>: prompts.map(({ id, title, content, tags }) => (
           <PromptCard
             key={id}
             id={id}
