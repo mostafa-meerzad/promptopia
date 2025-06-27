@@ -1,15 +1,9 @@
-import authOptions from "@/app/auth/authOptions";
 import { promptSchema } from "@/app/_services/validationSchemas";
+import authOptions from "@/app/auth/authOptions";
 import { prismaClient } from "@/prisma/lib/prisma";
 import { parseTags } from "@/utils/parseTags";
 import { getServerSession } from "next-auth";
-import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
-
-export async function GET() {
-  const prompts = await prismaClient.prompt.findMany();
-  return NextResponse.json({ prompts });
-}
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
