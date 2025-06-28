@@ -24,7 +24,6 @@ const EditPage = async ({ params }: Props) => {
       </VStack>
       <PromptForm 
       id={parseInt(id)}
-        mode="EDIT"
         initialValues={{
           content: prompt.content,
           title: prompt.title,

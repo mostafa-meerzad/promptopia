@@ -12,9 +12,9 @@ const DeleteButton = ({ id }: Props) => {
     <IconButton
       variant="surface"
       size="xs"
-      onClick={() => {
-        axios.delete(`/api/prompts/${id}`);
-        router.push("/prompts");
+      onClick={async () => {
+        await axios.delete(`/api/prompts/${id}`);
+        router.push("/dashboard");
         router.refresh();
       }}
     >

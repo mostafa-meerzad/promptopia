@@ -44,7 +44,12 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
             p={0}
           >
             {prompts.length === 0 ? (
-              <Text textAlign={"center"} mt={32}>
+              <Text
+                textAlign={"center"}
+                mt={{ base: 32, md: 56 }}
+                gridColumnStart={1}
+                gridColumnEnd={3}
+              >
                 No prompts found.
               </Text>
             ) : (

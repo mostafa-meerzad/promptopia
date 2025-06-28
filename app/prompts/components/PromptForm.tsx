@@ -22,11 +22,10 @@ interface Props {
     tags?: string;
     isPublic?: boolean;
   };
-  mode: "CREATE" | "EDIT";
   id?: number;
 }
 
-export default function PromptForm({ initialValues, mode, id }: Props) {
+export default function PromptForm({ initialValues, id }: Props) {
   const router = useRouter();
 
   const {
@@ -59,10 +58,12 @@ export default function PromptForm({ initialValues, mode, id }: Props) {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      mode === "CREATE"
-        ? await axios.post("/api/prompts", data)
-        : await axios.put(`/api/prompts/${id}`, data);
-      router.push("/prompts");
+      if (initialValues) {
+        await axios.put(`/api/prompts/${id}`, data);
+      } else {
+        await axios.post("/api/prompts", data);
+      }
+      router.push("/dashboard");
     } catch (err) {
       console.error(err);
     }
