@@ -9,10 +9,13 @@ type Props = { searchParams: { q: string } };
 const Prompts = async ({ searchParams }: Props) => {
   const { q } = await searchParams;
   const user = await getUserInfo();
-  const prompts = await searchPrompts({
+  const prompts =await searchPrompts({
     q,
     scope: user ? "PUBLIC_AND_MINE" : "PUBLIC_AND_MINE",
     authorId: user?.id,
+    viewerId: user?.id,
+
+
   });
 
   return (
@@ -27,13 +30,15 @@ const Prompts = async ({ searchParams }: Props) => {
         p={0}
         mt={8}
       >
-        {prompts.map(({ id, content, tags, author }) => (
+        {prompts.map(({ id, content, tags, author, userLiked, totalLikes }) => (
           <PromptCard
             key={id}
             id={id}
             content={content}
             tags={tags}
             author={author}
+            likes={totalLikes}
+            userLiked={userLiked}
           />
         ))}
       </SimpleGrid>

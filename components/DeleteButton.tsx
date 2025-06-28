@@ -15,7 +15,6 @@ const DeleteButton = ({ id }: Props) => {
       onClick={async () => {
         await axios.delete(`/api/prompts/${id}`);
         router.push("/dashboard");
-        router.refresh();
       }}
     >
       <AiOutlineDelete />

@@ -17,7 +17,7 @@ export async function PUT(
   const { content, isPublic, tags } = validation.data;
 
   const newPrompt = await prismaClient.prompt.update({
-    where: { id: parseInt(id) },
+    where: { id: id },
     data: { content, isPublic, tags: parseTags(tags) },
   });
 
@@ -31,13 +31,13 @@ export async function DELETE(
   const { id } = await params;
 
   const prompt = await prismaClient.prompt.findUnique({
-    where: { id: parseInt(id) },
+    where: { id: id },
   });
 
   if (!prompt)
     return NextResponse.json({ error: "invalid prompt" }, { status: 404 });
 
-  await prismaClient.prompt.delete({ where: { id: parseInt(id) } });
+  await prismaClient.prompt.delete({ where: { id: id } });
 
   return NextResponse.json({});
 }

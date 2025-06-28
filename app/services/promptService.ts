@@ -7,11 +7,12 @@ type Scope =
 
 const searchPrompts = async (opts: {
   q: string; // raw search term
-  authorId?: string; // empty = guest
+  authorId?: string; // prompt ownership (for filtering)
+  viewerId?: string; // logged-in user (for liked state)
   scope: Scope;
   take?: number; // limit
 }) => {
-  const { q, authorId, scope, take = 30 } = opts;
+  const { q, authorId, scope, take = 30, viewerId } = opts;
   const term = (q ?? "").trim().slice(0, 100); // safety guard
 
   const textFilter =
@@ -43,7 +44,7 @@ const searchPrompts = async (opts: {
       break;
   }
 
-  return prismaClient.prompt.findMany({
+  const prompts = await prismaClient.prompt.findMany({
     where: { AND: [textFilter, scopeFilter] },
     orderBy: { updatedAt: "desc" },
     take,
@@ -55,8 +56,21 @@ const searchPrompts = async (opts: {
           image: true,
         },
       },
+      _count: { select: { likes: true } },
+      likes: viewerId
+        ? {
+            where: { userId: viewerId },
+            select: { id: true },
+          }
+        : false,
     },
   });
+
+  return prompts.map((prompt) => ({
+    ...prompt,
+    totalLikes: prompt._count.likes,
+    userLiked: !!prompt.likes?.length,
+  }));
 };
 
 export default searchPrompts;

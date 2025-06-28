@@ -10,7 +10,6 @@ datasource db {
 model Prompt {
   id        String   @id @default(cuid())
   content   String   @db.Text
-  rating    Float?   @default(0)
   views     Int      @default(0)
   tags      String[] @default([])
   isPublic  Boolean  @default(true)

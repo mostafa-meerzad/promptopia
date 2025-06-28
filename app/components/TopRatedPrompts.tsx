@@ -6,6 +6,8 @@ import SearchInput from "@/components/SearchInput";
 
 interface PromptWithAuthor extends Prompt {
   author: { name: string | null; email: string; image: string | null };
+  totalLikes: number;
+  userLiked: boolean;
 }
 
 interface Props {
@@ -44,13 +46,15 @@ const TopRatedPrompts = ({ query, prompts }: Props) => {
         {prompts.length === 0 ? (
           <Text textAlign={"center"}>No prompts found ☹️.</Text>
         ) : (
-          prompts.map(({ id, content, tags, author }) => (
+          prompts.map(({ id, content, tags, author, totalLikes, userLiked }) => (
             <PromptCard
               key={id}
               id={id}
               content={content}
               tags={tags}
               author={author}
+              likes={totalLikes}
+              userLiked={userLiked}
             />
           ))
         )}

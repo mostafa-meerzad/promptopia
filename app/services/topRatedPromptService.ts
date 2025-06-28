@@ -1,8 +1,12 @@
 import { prismaClient } from "@/prisma/lib/prisma";
 
-const getTopRatedPrompts = async () => {
-  return await prismaClient.prompt.findMany({
-    where: { rating: { gt: 3.5, lte: 5 } },
+const getTopRatedPrompts = async (viewerId?: string) => {
+  const prompts = await prismaClient.prompt.findMany({
+    orderBy: {
+      likes: {
+        _count: "desc",
+      },
+    },
     take: 6,
     include: {
       author: {
@@ -12,8 +16,25 @@ const getTopRatedPrompts = async () => {
           image: true,
         },
       },
+      _count: {
+        select: {
+          likes: true,
+        },
+      },
+      likes: viewerId
+        ? {
+            where: { userId: viewerId },
+            select: { id: true },
+          }
+        : false,
     },
   });
+
+  return prompts.map((prompt) => ({
+    ...prompt,
+    totalLikes: prompt._count.likes,
+    userLiked: !!prompt.likes?.length,
+  }));
 };
 
 export default getTopRatedPrompts;

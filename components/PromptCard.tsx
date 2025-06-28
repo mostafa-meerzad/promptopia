@@ -6,6 +6,7 @@ import {
   GridItem,
   HStack,
   SimpleGrid,
+  Spacer,
   Tag,
   Text,
   VStack,
@@ -13,6 +14,7 @@ import {
 import CopyButton from "./CopyButton";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
+import LikeButton from "./LikeButton";
 
 interface Props {
   id: string;
@@ -20,6 +22,8 @@ interface Props {
   tags: string[];
   readonly?: boolean;
   author: { name: string | null; email: string; image: string | null };
+  likes: number;
+  userLiked: boolean;
 }
 
 const PromptCard = async ({
@@ -28,6 +32,8 @@ const PromptCard = async ({
   tags,
   readonly = true,
   author,
+  likes,
+  userLiked,
 }: Props) => {
   return (
     <Card.Root
@@ -77,9 +83,11 @@ const PromptCard = async ({
           fontSize={"xs"}
         >
           <HStack as={"ul"}>
+            <LikeButton id={id} liked={userLiked} likes={likes} />
+            <Spacer w={5} />
             {tags.map((tag, i) => (
               <Tag.Root as={"li"} key={i}>
-                <Tag.Label>{tag}</Tag.Label>
+                <Tag.Label># {tag}</Tag.Label>
               </Tag.Root>
             ))}
           </HStack>

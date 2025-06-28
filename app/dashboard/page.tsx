@@ -35,7 +35,7 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
       </GridItem>
       <GridItem>
         <SearchInput />
-        <Box>
+        <Box mt={6}>
           <SimpleGrid
             as={"ul"}
             columns={{ base: 1, lg: 2 }}
@@ -53,7 +53,7 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
                 No prompts found.
               </Text>
             ) : (
-              prompts.map(({ id, content, tags, author }) => (
+              prompts.map(({ id, content, tags, author, totalLikes }) => (
                 <PromptCard
                   key={id}
                   id={id}
@@ -61,6 +61,8 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
                   tags={tags}
                   readonly={false}
                   author={author}
+                  likes={totalLikes}
+                  userLiked={totalLikes > 0}
                 />
               ))
             )}
