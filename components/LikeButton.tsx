@@ -25,7 +25,7 @@ const LikeButton = ({ id, liked, likes }: Props) => {
   };
 
   return (
-    <IconButton aria-label="Like prompt" variant="ghost" onClick={handleLike}>
+    <IconButton aria-label="Like prompt" variant="ghost" borderRadius={"lg"} px={"2"} onClick={handleLike}>
       {isLiked ? <AiFillHeart color="red" /> : <AiOutlineHeart />}
       {likesCount}
     </IconButton>
