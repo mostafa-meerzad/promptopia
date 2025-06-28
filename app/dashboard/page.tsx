@@ -5,7 +5,7 @@ import getUserInfo from "../services/userService";
 import PromptCard from "../../components/PromptCard";
 import UserInfo from "../components/UserInfo";
 
-const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
+const DashBoard = async ({ searchParams }: { searchParams: Promise<{ q: string }> }) => {
   const { q } = await searchParams;
 
   const user = await getUserInfo();

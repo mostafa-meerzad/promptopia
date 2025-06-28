@@ -4,9 +4,8 @@ import searchPrompts from "../services/promptService";
 import getUserInfo from "../services/userService";
 import PromptCard from "../../components/PromptCard";
 
-type Props = { searchParams: { q: string } };
 
-const Prompts = async ({ searchParams }: Props) => {
+const Prompts = async ({ searchParams }:{ searchParams: Promise<{ q: string }> }) => {
   const { q } = await searchParams;
   const user = await getUserInfo();
   const prompts =await searchPrompts({

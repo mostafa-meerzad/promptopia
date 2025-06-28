@@ -4,14 +4,8 @@ import PromptForm from "../../components/PromptForm";
 import { Heading, VStack } from "@chakra-ui/react";
 import { joinTags } from "@/utils/parseTags";
 
-interface Props {
-  params: {
-    id: string;
-  };
-}
-
-const EditPage = async ({ params }: Props) => {
-  const {id} =  await params;
+const EditPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
   const prompt = await prismaClient.prompt.findUnique({
     where: { id: id },
   });
@@ -22,8 +16,8 @@ const EditPage = async ({ params }: Props) => {
       <VStack mt={4}>
         <Heading as="h2">Edit Prompt</Heading>
       </VStack>
-      <PromptForm 
-      id={id}
+      <PromptForm
+        id={id}
         initialValues={{
           content: prompt.content,
           isPublic: prompt.isPublic,

@@ -3,20 +3,33 @@ import { prismaClient } from "@/prisma/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest, { params }: {params: {promptId: string}}) {
+interface RequestType {
+  promptId: string;
+}
+
+export async function GET(request: NextRequest) {
+  const body: RequestType = await request.json();
+  if (!body.promptId)
+    return NextResponse.json(
+      { message: "promptId is require" },
+      { status: 400 }
+    );
+
   const session = await getServerSession(authOptions);
-  if (!session?.user?.email) return;
+  if (!session?.user?.email)
+    return NextResponse.json({ message: "unauthorized" }, { status: 401 });
 
   const currentUser = await prismaClient.user.findUnique({
     where: { email: session?.user?.email },
   });
-  const { promptId } = await params;
 
-  const totalLikes = await prismaClient.like.count({ where: { promptId } });
+  const totalLikes = await prismaClient.like.count({
+    where: { id: body.promptId },
+  });
 
   const userLiked = currentUser?.id
     ? !!(await prismaClient.like.findFirst({
-        where: { promptId, userId: currentUser.id },
+        where: { id: body.promptId, userId: currentUser.id },
       }))
     : false;
 
