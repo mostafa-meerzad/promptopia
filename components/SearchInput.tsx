@@ -1,5 +1,5 @@
 "use client";
-import { Input, InputGroup } from "@chakra-ui/react";
+import { Flex, IconButton, Input } from "@chakra-ui/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { CiSearch } from "react-icons/ci";
@@ -17,14 +17,17 @@ const SearchInput = () => {
 
   return (
     <form onSubmit={handleSubmit} style={{ marginBottom: "1rem" }}>
-      <InputGroup startElement={<CiSearch size={"20px"} />}>
+      <Flex gap={2}>
         <Input
           placeholder="Search a prompt..."
-          borderRadius={"full"}
-          onChange={(e) => setTxt(e.target.value)}
+          borderRadius="full"
           value={txt}
+          onChange={(e) => setTxt(e.target.value)}
         />
-      </InputGroup>
+        <IconButton aria-label="Search" type="submit" borderRadius="full">
+          <CiSearch />
+        </IconButton>
+      </Flex>
     </form>
   );
 };
