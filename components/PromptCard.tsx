@@ -15,7 +15,7 @@ import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
 
 interface Props {
-  id: number;
+  id: string;
   content: string;
   tags: string[];
   readonly?: boolean;

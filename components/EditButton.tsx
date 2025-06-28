@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { CiEdit } from "react-icons/ci";
 interface Props {
-  id: number;
+  id: string;
 }
 const EditButton = ({ id }: Props) => {
   return (

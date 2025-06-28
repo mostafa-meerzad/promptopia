@@ -13,7 +13,7 @@ interface Props {
 const EditPage = async ({ params }: Props) => {
   const {id} =  await params;
   const prompt = await prismaClient.prompt.findUnique({
-    where: { id: parseInt(id) },
+    where: { id: id },
   });
   if (!prompt) return notFound();
 
@@ -23,7 +23,7 @@ const EditPage = async ({ params }: Props) => {
         <Heading as="h2">Edit Prompt</Heading>
       </VStack>
       <PromptForm 
-      id={parseInt(id)}
+      id={id}
         initialValues={{
           content: prompt.content,
           isPublic: prompt.isPublic,

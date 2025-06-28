@@ -4,7 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { AiOutlineDelete } from "react-icons/ai";
 interface Props {
-  id: number;
+  id: string;
 }
 const DeleteButton = ({ id }: Props) => {
   const router = useRouter();

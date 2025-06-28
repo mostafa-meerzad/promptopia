@@ -21,7 +21,7 @@ interface Props {
     tags?: string;
     isPublic?: boolean;
   };
-  id?: number;
+  id?: string;
 }
 
 export default function PromptForm({ initialValues, id }: Props) {
