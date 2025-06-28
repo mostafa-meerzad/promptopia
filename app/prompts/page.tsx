@@ -25,12 +25,12 @@ const Prompts = async ({ searchParams }: Props) => {
         gap={6}
         listStyleType={"none"}
         p={0}
+        mt={8}
       >
-        {prompts.map(({ id, title, content, tags, author }) => (
+        {prompts.map(({ id, content, tags, author }) => (
           <PromptCard
             key={id}
             id={id}
-            title={title}
             content={content}
             tags={tags}
             author={author}
