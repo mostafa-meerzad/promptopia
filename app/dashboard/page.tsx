@@ -53,11 +53,10 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
                 No prompts found.
               </Text>
             ) : (
-              prompts.map(({ id, title, content, tags, author }) => (
+              prompts.map(({ id, content, tags, author }) => (
                 <PromptCard
                   key={id}
                   id={id}
-                  title={title}
                   content={content}
                   tags={tags}
                   readonly={false}

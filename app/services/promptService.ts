@@ -18,7 +18,7 @@ const searchPrompts = async (opts: {
     term.length > 0
       ? {
           OR: [
-            { title: { contains: term, mode: "insensitive" } },
+            { tags: { has: term } },
             { content: { contains: term, mode: "insensitive" } },
           ],
         }

@@ -17,7 +17,6 @@ import { FormValues, promptSchema } from "../../services/validationSchemas";
 
 interface Props {
   initialValues?: {
-    title: string;
     content: string;
     tags?: string;
     isPublic?: boolean;
@@ -36,7 +35,6 @@ export default function PromptForm({ initialValues, id }: Props) {
   } = useForm<FormValues>({
     resolver: zodResolver(promptSchema),
     defaultValues: {
-      title: initialValues?.title ?? "",
       content: initialValues?.content ?? "",
       tags: initialValues?.tags ?? "",
       isPublic: initialValues?.isPublic ?? true,
@@ -48,7 +46,6 @@ export default function PromptForm({ initialValues, id }: Props) {
   useEffect(() => {
     if (initialValues) {
       reset({
-        title: initialValues.title ?? "",
         content: initialValues.content,
         tags: initialValues.tags ?? "",
         isPublic: initialValues.isPublic ?? true,
@@ -78,20 +75,6 @@ export default function PromptForm({ initialValues, id }: Props) {
         mx="auto"
         align="stretch"
       >
-        {/* Title ------------------------------------------------------- */}
-        <Field.Root invalid={!!errors.title}>
-          <Field.Label>Title</Field.Label>
-          <Input
-            boxShadow="md"
-            borderRadius="lg"
-            placeholder="e.g. Time travel"
-            _light={{ borderColor: "gray.500" }}
-            _dark={{ borderColor: "gray.600" }}
-            {...register("title")}
-          />
-          <Field.ErrorText>{errors.title?.message}</Field.ErrorText>
-        </Field.Root>
-
         <Field.Root invalid={!!errors.content}>
           <Field.Label>Prompt</Field.Label>
           <Textarea

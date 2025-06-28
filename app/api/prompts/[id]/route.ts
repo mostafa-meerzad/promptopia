@@ -14,11 +14,11 @@ export async function PUT(
   if (!validation.success)
     return NextResponse.json(validation.error.errors[0], { status: 400 });
 
-  const { title, content, isPublic, tags } = validation.data;
+  const { content, isPublic, tags } = validation.data;
 
   const newPrompt = await prismaClient.prompt.update({
     where: { id: parseInt(id) },
-    data: { title, content, isPublic, tags: parseTags(tags) },
+    data: { content, isPublic, tags: parseTags(tags) },
   });
 
   return NextResponse.json({ ok: true, prompt: newPrompt });

@@ -16,7 +16,6 @@ import EditButton from "./EditButton";
 
 interface Props {
   id: number;
-  title: string;
   content: string;
   tags: string[];
   readonly?: boolean;
@@ -25,7 +24,6 @@ interface Props {
 
 const PromptCard = async ({
   id,
-  title,
   content,
   tags,
   readonly = true,

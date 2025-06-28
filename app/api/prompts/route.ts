@@ -16,12 +16,11 @@ export async function POST(req: NextRequest) {
   if (!validation.success)
     return NextResponse.json(validation.error.format(), { status: 400 });
 
-  const { title, content, isPublic, tags } = validation.data;
+  const { content, isPublic, tags } = validation.data;
   const stringTags = parseTags(tags);
 
   const newPrompt = await prismaClient.prompt.create({
     data: {
-      title,
       content,
       isPublic,
       tags: stringTags,

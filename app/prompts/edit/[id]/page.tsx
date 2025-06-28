@@ -26,7 +26,6 @@ const EditPage = async ({ params }: Props) => {
       id={parseInt(id)}
         initialValues={{
           content: prompt.content,
-          title: prompt.title,
           isPublic: prompt.isPublic,
           tags: joinTags(prompt.tags),
         }}
