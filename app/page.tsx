@@ -1,8 +1,8 @@
 import Hero from "./Hero";
-import TopRatedPrompts from "./TopRatedPrompts";
-import ViewMore from "./_components/ViewMore";
-import searchPrompts from "./_services/promptService";
-import getTopRatedPrompts from "./_services/topRatedPromptService";
+import TopRatedPrompts from "./components/TopRatedPrompts";
+import ViewMore from "./components/ViewMore";
+import searchPrompts from "./services/promptService";
+import getTopRatedPrompts from "./services/topRatedPromptService";
 type Props = { searchParams: { q: string } };
 
 const HomePage = async ({ searchParams }: Props) => {

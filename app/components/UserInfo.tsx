@@ -11,7 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { signOut } from "next-auth/react";
-import useUserInfo from "./hooks/useUserInfo";
+import useUserInfo from "../dashboard/hooks/useUserInfo";
 
 const UserInfo = () => {
   const { user } = useUserInfo();

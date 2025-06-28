@@ -1,8 +1,8 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
-import SearchInput from "../_components/SearchInput";
-import searchPrompts from "../_services/promptService";
-import getUserInfo from "../_services/userService";
-import PromptCard from "../PromptCard";
+import SearchInput from "../../components/SearchInput";
+import searchPrompts from "../services/promptService";
+import getUserInfo from "../services/userService";
+import PromptCard from "../../components/PromptCard";
 
 type Props = { searchParams: { q: string } };
 

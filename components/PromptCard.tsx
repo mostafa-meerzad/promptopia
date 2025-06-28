@@ -1,10 +1,14 @@
 import {
+  AvatarFallback,
+  AvatarImage,
+  AvatarRoot,
   Card,
   GridItem,
   HStack,
   SimpleGrid,
   Tag,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import CopyButton from "./CopyButton";
 import DeleteButton from "./DeleteButton";
@@ -16,6 +20,7 @@ interface Props {
   content: string;
   tags: string[];
   readonly?: boolean;
+  author: { name: string | null; email: string; image: string | null };
 }
 
 const PromptCard = async ({
@@ -24,6 +29,7 @@ const PromptCard = async ({
   content,
   tags,
   readonly = true,
+  author,
 }: Props) => {
   return (
     <Card.Root
@@ -34,7 +40,13 @@ const PromptCard = async ({
     >
       <Card.Body gap={2}>
         <HStack justifyContent={"space-between"}>
-          <Card.Title>{title}</Card.Title>
+          <Card.Title>
+            <AuthorInfo
+              name={author.name}
+              email={author.email}
+              image={author.image}
+            />
+          </Card.Title>
           <SimpleGrid
             columns={2}
             gap={3}
@@ -76,6 +88,45 @@ const PromptCard = async ({
         </Card.Footer>
       </Card.Body>
     </Card.Root>
+  );
+};
+
+const AuthorInfo = ({
+  name,
+  email,
+  image,
+}: {
+  name: string | null;
+  email: string;
+  image: string | null;
+}) => {
+  return (
+    <HStack gap={3}>
+      <AvatarRoot size={"sm"}>
+        <AvatarFallback name={name ?? "?"} />
+        <AvatarImage src={image ?? ""} />
+      </AvatarRoot>
+      <VStack alignItems={"start"} gap={0}>
+        <Text
+          fontWeight={"semibold"}
+          fontSize={"sm"}
+          m={0}
+          p={0}
+          lineHeight={"shorter"}
+        >
+          {name}
+        </Text>
+        <Text
+          fontWeight={"normal"}
+          fontSize={"xs"}
+          m={0}
+          p={0}
+          lineHeight={"shorter"}
+        >
+          {email}
+        </Text>
+      </VStack>
+    </HStack>
   );
 };
 

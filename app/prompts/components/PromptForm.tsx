@@ -13,7 +13,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { FormValues, promptSchema } from "../_services/validationSchemas";
+import { FormValues, promptSchema } from "../../services/validationSchemas";
 
 interface Props {
   initialValues?: {
@@ -67,7 +67,6 @@ export default function PromptForm({ initialValues, mode, id }: Props) {
       console.error(err);
     }
   };
-  /* ----------------------------- UI ------------------------------------- */
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack
@@ -92,7 +91,6 @@ export default function PromptForm({ initialValues, mode, id }: Props) {
           <Field.ErrorText>{errors.title?.message}</Field.ErrorText>
         </Field.Root>
 
-        {/* Content ----------------------------------------------------- */}
         <Field.Root invalid={!!errors.content}>
           <Field.Label>Prompt</Field.Label>
           <Textarea
@@ -108,7 +106,6 @@ export default function PromptForm({ initialValues, mode, id }: Props) {
           <Field.ErrorText>{errors.content?.message}</Field.ErrorText>
         </Field.Root>
 
-        {/* Tags -------------------------------------------------------- */}
         <Field.Root invalid={!!errors.tags}>
           <Field.Label>Tags</Field.Label>
           <Input
@@ -122,7 +119,6 @@ export default function PromptForm({ initialValues, mode, id }: Props) {
           <Field.ErrorText>{errors.tags?.message}</Field.ErrorText>
         </Field.Root>
 
-        {/* Visibility -------------------------------------------------- */}
         <Checkbox.Root
           defaultChecked={initialValues ? initialValues.isPublic : true}
         >
@@ -134,7 +130,6 @@ export default function PromptForm({ initialValues, mode, id }: Props) {
           />
         </Checkbox.Root>
 
-        {/* Submit ------------------------------------------------------ */}
         <Button
           type="submit"
           colorScheme="teal"

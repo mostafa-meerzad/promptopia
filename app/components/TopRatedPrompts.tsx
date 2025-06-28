@@ -1,8 +1,8 @@
 import { Box, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 
 import { Prompt } from "@prisma/client";
-import PromptCard from "./PromptCard";
-import SearchInput from "./_components/SearchInput";
+import PromptCard from "@/components/PromptCard";
+import SearchInput from "@/components/SearchInput";
 
 interface PromptWithAuthor extends Prompt {
   author: { name: string | null; email: string; image: string | null };

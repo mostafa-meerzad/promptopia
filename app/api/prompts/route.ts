@@ -1,4 +1,4 @@
-import { promptSchema } from "@/app/_services/validationSchemas";
+import { promptSchema } from "@/app/services/validationSchemas";
 import authOptions from "@/app/auth/authOptions";
 import { prismaClient } from "@/prisma/lib/prisma";
 import { parseTags } from "@/utils/parseTags";

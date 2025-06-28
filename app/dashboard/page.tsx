@@ -1,9 +1,9 @@
 import { Box, Grid, GridItem, SimpleGrid, Stack, Text } from "@chakra-ui/react";
-import SearchInput from "../_components/SearchInput";
-import searchPrompts from "../_services/promptService";
-import getUserInfo from "../_services/userService";
-import PromptCard from "../PromptCard";
-import UserInfo from "./UserInfo";
+import SearchInput from "../../components/SearchInput";
+import searchPrompts from "../services/promptService";
+import getUserInfo from "../services/userService";
+import PromptCard from "../../components/PromptCard";
+import UserInfo from "../components/UserInfo";
 
 const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
   const { q } = await searchParams;
@@ -27,7 +27,6 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
         borderWidth={"1px"}
         borderRadius={5}
         borderColor={{ _dark: "gray.800", _light: "gray.200" }}
-        fontSize={"sm"}
         px={"4"}
         py={"16"}
         h={{ base: "auto", md: "100svh" }}
@@ -35,9 +34,7 @@ const DashBoard = async ({ searchParams }: { searchParams: { q: string } }) => {
         <UserInfo />
       </GridItem>
       <GridItem>
-        <Stack direction={{ base: "column", md: "row" }} gap={4}>
-          <SearchInput />
-        </Stack>
+        <SearchInput />
         <Box>
           <SimpleGrid
             as={"ul"}

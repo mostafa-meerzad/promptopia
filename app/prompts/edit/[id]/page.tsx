@@ -1,6 +1,6 @@
 import { prismaClient } from "@/prisma/lib/prisma";
 import { notFound } from "next/navigation";
-import PromptForm from "../../PromptForm";
+import PromptForm from "../../components/PromptForm";
 import { Heading, VStack } from "@chakra-ui/react";
 import { joinTags } from "@/utils/parseTags";
 
