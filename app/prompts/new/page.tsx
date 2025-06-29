@@ -7,7 +7,7 @@ const CreatePrompt = () => {
       <VStack mt={4}>
         <Heading as="h2">Create Prompt</Heading>
       </VStack>
-      <PromptForm/>;
+      <PromptForm/>
     </>
   );
 };

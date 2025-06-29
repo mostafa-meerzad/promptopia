@@ -4,7 +4,7 @@ Promptopia is a full-stack AI prompt sharing application where users can create,
 
 ## 🌐 Live Demo
 
-[🔗 Visit Promptopia](https://your-deployed-url.com)
+[🔗 Visit Promptopia](https://promptopia-black-beta.vercel.app/)
 
 ---
 
@@ -23,8 +23,9 @@ Promptopia allows users to share and discover AI prompts across different domain
 - 🔍 **Search** prompts by keyword
 - 📋 **Copy** prompts to clipboard
 - 🔄 **Responsive** and modern design
-- 🔎 **Public & Private** prompt visibility (if supported)
-- 📈 **Top Rated** section (optional highlight)
+- 🔎 **Public & Private** prompt visibility
+- 📈 **Top Rated** section
+- 💖 **Like Prompt** like a prompt
 
 ---
 
@@ -45,26 +46,11 @@ Promptopia allows users to share and discover AI prompts across different domain
 
 ---
 
-## 📂 Folder Structure (Simplified)
-
-```
-
-/app              → App router structure (Next.js 15)
-/auth             → Auth configuration (Google OAuth)
-/\_components      → UI components like PromptCard, SearchInput
-/\_services        → Axios services for prompt CRUD
-/prisma           → Prisma client & schema
-/public           → Static assets
-
-```
-
----
-
 ## 🧑‍💻 Getting Started (Development)
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/promptopia.git
+git clone https://github.com/mostafa-meerzad/promptopia.git
 cd promptopia
 
 # 2. Install dependencies
@@ -88,6 +74,7 @@ npm run dev
 ```env
 DATABASE_URL=postgresql://user:password@localhost:5432/promptopia
 NEXTAUTH_SECRET=your-secret
+NEXTAUTH_URL="http://localhost:3000"
 GOOGLE_CLIENT_ID=your-client-id
 GOOGLE_CLIENT_SECRET=your-client-secret
 ```
@@ -96,17 +83,19 @@ GOOGLE_CLIENT_SECRET=your-client-secret
 
 ## 📸 Screenshots
 
-> _(Optional: Add 2-3 images of the homepage, dashboard, and prompt creation page)_
+![home-page](./home-page.png)
+![prompts-page](./prompts-page.png)
+![create-form](./create-form.png)
+![dashboard-page](./dashboard-page.png)
 
 ---
 
 ## 🧭 Roadmap
 
 - 🌑 Dark mode support
-- 💬 Comments or likes on prompts
+- 💬 likes on prompts
 - 🏷️ Prompt tags and categories
 - 📊 Prompt analytics (views, copies)
-- 🔔 Notifications
 
 ---
 
@@ -125,5 +114,3 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 ## 🙌 Acknowledgements
 
 Built with ❤️ by [Mostafa Meerzad](https://www.linkedin.com/in/mostafa-meerzad-a753371b7/)
-
-
