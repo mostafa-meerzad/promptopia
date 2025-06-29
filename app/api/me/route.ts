@@ -1,7 +1,9 @@
 import authOptions from "@/app/auth/authOptions";
 import { prismaClient } from "@/prisma/lib/prisma";
+import { Prompt } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+
 
 export async function GET() {
   const session = await getServerSession(authOptions);
