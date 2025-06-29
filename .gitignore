@@ -44,3 +44,5 @@ ProjectPlan.md
 /lib/generated
 .vscode
 NOTES.md
+# Sentry Config File
+.env.sentry-build-plugin
