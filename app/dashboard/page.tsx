@@ -5,7 +5,11 @@ import getUserInfo from "../services/userService";
 import PromptCard from "../../components/PromptCard";
 import UserInfo from "../components/UserInfo";
 
-const DashBoard = async ({ searchParams }: { searchParams: Promise<{ q: string }> }) => {
+const DashBoard = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ q: string }>;
+}) => {
   const { q } = await searchParams;
 
   const user = await getUserInfo();
@@ -46,11 +50,11 @@ const DashBoard = async ({ searchParams }: { searchParams: Promise<{ q: string }
             {prompts.length === 0 ? (
               <Text
                 textAlign={"center"}
-                mt={{ base: 32, md: 56 }}
                 gridColumnStart={1}
-                gridColumnEnd={3}
+                gridColumnEnd={4}
+                py={10}
               >
-                No prompts found.
+                No prompts found ☹️.
               </Text>
             ) : (
               prompts.map(({ id, content, tags, author, totalLikes }) => (

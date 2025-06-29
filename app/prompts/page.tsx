@@ -1,20 +1,21 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, SimpleGrid, Text } from "@chakra-ui/react";
 import SearchInput from "../../components/SearchInput";
 import searchPrompts from "../services/promptService";
 import getUserInfo from "../services/userService";
 import PromptCard from "../../components/PromptCard";
 
-
-const Prompts = async ({ searchParams }:{ searchParams: Promise<{ q: string }> }) => {
+const Prompts = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ q: string }>;
+}) => {
   const { q } = await searchParams;
   const user = await getUserInfo();
-  const prompts =await searchPrompts({
+  const prompts = await searchPrompts({
     q,
     scope: user ? "PUBLIC_AND_MINE" : "PUBLIC_AND_MINE",
     authorId: user?.id,
     viewerId: user?.id,
-
-
   });
 
   return (
@@ -29,17 +30,30 @@ const Prompts = async ({ searchParams }:{ searchParams: Promise<{ q: string }> }
         p={0}
         mt={8}
       >
-        {prompts.map(({ id, content, tags, author, userLiked, totalLikes }) => (
-          <PromptCard
-            key={id}
-            id={id}
-            content={content}
-            tags={tags}
-            author={author}
-            likes={totalLikes}
-            userLiked={userLiked}
-          />
-        ))}
+        {prompts.length === 0 ? (
+          <Text
+            textAlign={"center"}
+            gridColumnStart={1}
+            gridColumnEnd={4}
+            py={10}
+          >
+            No prompts found ☹️.
+          </Text>
+        ) : (
+          prompts.map(
+            ({ id, content, tags, author, userLiked, totalLikes }) => (
+              <PromptCard
+                key={id}
+                id={id}
+                content={content}
+                tags={tags}
+                author={author}
+                likes={totalLikes}
+                userLiked={userLiked}
+              />
+            )
+          )
+        )}
       </SimpleGrid>
     </Box>
   );

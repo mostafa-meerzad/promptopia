@@ -44,7 +44,7 @@ const TopRatedPrompts = ({ query, prompts }: Props) => {
         p={0}
       >
         {prompts.length === 0 ? (
-          <Text textAlign={"center"}>No prompts found ☹️.</Text>
+          <Text textAlign={"center"} gridColumnStart={1} gridColumnEnd={4} py={10}>No prompts found ☹️.</Text>
         ) : (
           prompts.map(({ id, content, tags, author, totalLikes, userLiked }) => (
             <PromptCard
